@@ -28,8 +28,8 @@ import { PersistGate } from "redux-persist/integration/react";
 // import FaqPointScreen from 'screens/Introduce/faq.point.screen';
 // import FaqDiamondScreen from 'screens/Introduce/faq.diamond.screen';
 import { clearBugLogHelper, setBugDeviceHelper } from "helpers/storage.helper";
-import ViewShot, { CaptureOptions } from "react-native-view-shot";
-import GlobalHelper from "helpers/global.helper";
+// import ViewShot, { CaptureOptions } from "react-native-view-shot";
+// import GlobalHelper from "helpers/global.helper";
 import { VS } from "constants/system/ui/sizes.ui.constant";
 
 const storage = new MMKV();
@@ -37,7 +37,7 @@ const storage = new MMKV();
 
 
 const store = getStore();
-const optionsScreenShot: CaptureOptions = { format: "jpg", quality: 0.8 };
+// const optionsScreenShot: CaptureOptions = { format: "jpg", quality: 0.8 };
 
 const App = () => {
   const [isProduct, setIsProduct] = useState<boolean | null>(null);
@@ -77,7 +77,7 @@ const App = () => {
       <SafeAreaProvider>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
-            <ViewShot style={styles.container} ref={GlobalHelper.ViewShotRef} options={optionsScreenShot}>
+            {/*<ViewShot style={styles.container} ref={GlobalHelper.ViewShotRef} options={optionsScreenShot}>*/}
               <BottomSheetModalProvider>
                 <AppNavigation />
               </BottomSheetModalProvider>
@@ -100,7 +100,7 @@ const App = () => {
                   </View>
                 ) : null
               }
-            </ViewShot>
+            {/*</ViewShot>*/}
           </PersistGate>
         </Provider>
       </SafeAreaProvider>

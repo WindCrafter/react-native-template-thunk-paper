@@ -40,6 +40,7 @@ export const VS = {
  */
 export const MHS = {
   _1: mhs(1),
+  _16: mhs(16),
 };
 
 /**
