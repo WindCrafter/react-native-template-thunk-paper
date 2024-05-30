@@ -1,23 +1,28 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import { Button, TextInput } from "react-native-paper";
-import { MHS } from "constants/system/ui/sizes.ui.constant";
-import GlobalHelper from "helpers/globalHelper";
-import { useSystem } from "helpers/hooks/system.hook";
-import { MD3Colors } from "react-native-paper/lib/typescript/types";
+import {StyleSheet, View} from "react-native";
+import {Button, TextInput} from "react-native-paper";
+import {MHS} from "constants/system/ui/sizes.ui.constant";
+import {useSystem} from "helpers/hooks/system.hook";
+import {MD3Colors} from "react-native-paper/lib/typescript/types";
+import {useAppDispatch} from "configs/store.config";
+import {setThemeTypeThunk} from "store/reducers/system.reducer.store";
+import {IThemeType} from "constants/system/system.constant";
 
 
 export default function LoginScreen() {
   const {styles} = useSystem(createStyles)
   const [text, setText] = React.useState("");
 
+  const dispatch = useAppDispatch()
+
 
   function login() {
-    GlobalHelper.showSnackBarHelper({
-      content: "Hello",
-      duration: 2000,
-      elevation: 5
-    });
+    // GlobalHelper.showSnackBarHelper({
+    //   content: "Hello",
+    //   duration: 2000,
+    //   elevation: 5
+    // });
+    dispatch(setThemeTypeThunk(IThemeType.Light))
   }
 
   return (
@@ -53,7 +58,8 @@ const createStyles = (colors: MD3Colors) => {
       justifyContent: "center",
       alignItems: "center",
       paddingHorizontal: MHS._16,
-      gap: MHS._16
+      gap: MHS._16,
+      backgroundColor: colors.background
     },
     input: {
       width: "100%",

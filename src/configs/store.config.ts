@@ -25,8 +25,8 @@ export const reduxStorage: Storage = {
 const persistConfig = {
   key: "root",
   storage: reduxStorage,
-  blacklist: ["extension"],
-  whitelist: ["user", "system", "home", "chest", "challenge"],
+  blacklist: [],
+  whitelist: ["user", "system"],
   stateReconciler: autoMergeLevel2
 };
 

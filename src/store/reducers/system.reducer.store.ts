@@ -17,8 +17,11 @@ export const system = createSlice({
   name: "system",
   initialState: initialState,
   reducers: {
-    setLanguageThunk: (state, action) => {
+    setLanguageThunk: (state, action: {payload: string}) => {
       state.language = action.payload;
+    },
+    setThemeTypeThunk: (state, action:{payload: IThemeType}) => {
+      state.themeType = action.payload;
     }
   },
   extraReducers(builder) {
@@ -28,6 +31,7 @@ export const system = createSlice({
 
 // Reducer
 export const {
-  setLanguageThunk
+  setLanguageThunk,
+  setThemeTypeThunk
 } = system.actions;
 export default system.reducer;

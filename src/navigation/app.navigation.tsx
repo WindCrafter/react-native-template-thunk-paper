@@ -50,7 +50,7 @@ export default function AppNavigation() {
   const routeNameRef = useRef("");
   const themeType = useAppSelector((state) => state.system.themeType);
   const [isProduct, setIsProduct] = useState<boolean | null>(null);
-  const theme = useMemo(()=> THEME[themeType],[])
+  const theme = useMemo(()=> THEME[themeType],[themeType])
   const dispatch = useAppDispatch();
 
   useEffect(() => {
