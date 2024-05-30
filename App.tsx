@@ -15,7 +15,6 @@ import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 // import LevelupModal from 'components/LevelUp/levelup.modal';
 // import ModalMedia from 'components/Media/ModalMedia.component';
 // import AppStateApp from "components/appConponents/appState.component";
-// import GlobalPopupApp from "components/appConponents/globalPopup.component";
 import { ENVIRONMENT, setUrlEnv } from "configs";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 // import { endConnection, withIAPContext } from "react-native-iap";
@@ -31,6 +30,10 @@ import { clearBugLogHelper, setBugDeviceHelper } from "helpers/storage.helper";
 // import ViewShot, { CaptureOptions } from "react-native-view-shot";
 // import GlobalHelper from "helpers/global.helper";
 import { VS } from "constants/system/ui/sizes.ui.constant";
+import GlobalHelper from "helpers/globalHelper";
+import LoadingGlobalComponent from "components/global/loading.global.component";
+import SnackBarGlobalComponent from "components/global/snackbar.global.component";
+import { PaperProvider } from "react-native-paper";
 
 const storage = new MMKV();
 // import ModalMediaPost from "components/Media/ModalMediaPost.component";
@@ -77,13 +80,15 @@ const App = () => {
       <SafeAreaProvider>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
+            <PaperProvider>
             {/*<ViewShot style={styles.container} ref={GlobalHelper.ViewShotRef} options={optionsScreenShot}>*/}
               <BottomSheetModalProvider>
                 <AppNavigation />
               </BottomSheetModalProvider>
               {/*<AppStateApp ref={GlobalPopupHelper.appStateRef} />*/}
               {/*<SocketConnect ref={GlobalPopupHelper.globalSocketRef} />*/}
-              {/*<GlobalPopupApp ref={GlobalPopupHelper.globalUIRef} />*/}
+              <LoadingGlobalComponent ref={GlobalHelper.LoadingRef} />
+              <SnackBarGlobalComponent ref={GlobalHelper.SnackBarRef} />
               {/*<WrapDropdown ref={GlobalPopupHelper.globalAlertRef} />*/}
               {/*<WrapAlertView ref={GlobalPopupHelper.alertRef} />*/}
               {/*<WrapActionSheetView ref={GlobalPopupHelper.actionSheetRef} />*/}
@@ -101,6 +106,7 @@ const App = () => {
                 ) : null
               }
             {/*</ViewShot>*/}
+            </PaperProvider>
           </PersistGate>
         </Provider>
       </SafeAreaProvider>

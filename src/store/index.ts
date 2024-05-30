@@ -6,7 +6,6 @@ import user from "./reducers/user.reducer.store";
 /**
  * Reg and import store from here ...
  */
-
 const rootReducer = combineReducers({
   system,
   user
