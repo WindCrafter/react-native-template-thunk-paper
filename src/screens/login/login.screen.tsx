@@ -3,10 +3,10 @@ import {StyleSheet, View} from "react-native";
 import {Button, TextInput} from "react-native-paper";
 import {MHS} from "constants/system/ui/sizes.ui.constant";
 import {useSystem} from "helpers/hooks/system.hook";
-import {MD3Colors} from "react-native-paper/lib/typescript/types";
 import {useAppDispatch} from "configs/store.config";
-import {setThemeTypeThunk} from "store/reducers/system.reducer.store";
-import {IThemeType} from "constants/system/system.constant";
+import {ESystemStatus} from "constants/system/system.constant";
+import {ITheme} from "constants/system/ui/theme.constant";
+import GlobalHelper from "helpers/globalHelper";
 
 
 export default function LoginScreen() {
@@ -17,12 +17,12 @@ export default function LoginScreen() {
 
 
   function login() {
-    // GlobalHelper.showSnackBarHelper({
-    //   content: "Hello",
-    //   duration: 2000,
-    //   elevation: 5
-    // });
-    dispatch(setThemeTypeThunk(IThemeType.Light))
+    GlobalHelper.showSnackBarHelper({
+      content: "Hello",
+      duration: 2000,
+      elevation: 5,
+      type: ESystemStatus.Warning
+    });
   }
 
   return (
@@ -51,7 +51,7 @@ export default function LoginScreen() {
 };
 
 
-const createStyles = (colors: MD3Colors) => {
+const createStyles = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -59,7 +59,7 @@ const createStyles = (colors: MD3Colors) => {
       alignItems: "center",
       paddingHorizontal: MHS._16,
       gap: MHS._16,
-      backgroundColor: colors.background
+      backgroundColor: theme.colors.background
     },
     input: {
       width: "100%",

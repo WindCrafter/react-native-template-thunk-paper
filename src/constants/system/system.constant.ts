@@ -1,9 +1,8 @@
 export enum ESystemStatus {
-  Info,
-  Warning,
-  Error,
-  None,
-  Success
+  Info= "info",
+  Warning = "warning",
+  Error = "error",
+  Success = "success"
 }
 
 export enum IThemeType{

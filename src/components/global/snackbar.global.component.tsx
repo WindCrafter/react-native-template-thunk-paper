@@ -1,6 +1,7 @@
-import React, { forwardRef, memo, useCallback, useImperativeHandle, useRef, useState } from "react";
-import { Portal, Snackbar, SnackbarProps, useTheme } from "react-native-paper";
-import { ESystemStatus } from "constants/system/system.constant";
+import React, {forwardRef, memo, useCallback, useImperativeHandle, useRef, useState} from "react";
+import {Portal, Snackbar, SnackbarProps, useTheme} from "react-native-paper";
+import {ESystemStatus} from "constants/system/system.constant";
+import {ITheme} from "constants/system/ui/theme.constant";
 
 export interface SnackBarProps extends Omit<SnackbarProps, "children" | "visible" | "onDismiss"> {
   visible?: boolean;
@@ -17,7 +18,7 @@ export interface ISnackBarGlobalComponent {
 
 function SnackBarGlobalComponent(_: any, ref: React.ForwardedRef<ISnackBarGlobalComponent>) {
 
-  const themeMD3 = useTheme();
+  const themeSystem = useTheme() as ITheme;
   const [snackBarProps, setSnackBarProps] = useState<SnackBarProps>();
   const timeoutRef = useRef<NodeJS.Timeout>();
 
@@ -33,7 +34,8 @@ function SnackBarGlobalComponent(_: any, ref: React.ForwardedRef<ISnackBarGlobal
   const showSnackBar = useCallback((props: SnackBarProps) => {
     let theme = {
       colors: {
-        inverseOnSurface: "white"
+        // inverseOnSurface: themeSystem.colors[props.type || "inverseOnSurface"],
+        inverseSurface: themeSystem.colors[props.type || "inverseSurface"],
       }
     };
     switch (props?.type) {
@@ -41,7 +43,7 @@ function SnackBarGlobalComponent(_: any, ref: React.ForwardedRef<ISnackBarGlobal
     }
 
     setSnackBarProps({
-      type: ESystemStatus.None, duration: 5000, onDismiss: () => {
+      type: ESystemStatus.Info, duration: 5000, onDismiss: () => {
       }, theme, ...props, visible: true
     });
   }, []);
