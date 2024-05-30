@@ -1,5 +1,5 @@
 import React, { forwardRef, memo, useCallback, useImperativeHandle, useRef, useState } from "react";
-import { MD3Colors, Portal, Snackbar, SnackbarProps } from "react-native-paper";
+import { Portal, Snackbar, SnackbarProps, useTheme } from "react-native-paper";
 import { ESystemStatus } from "constants/system/system.constant";
 
 export interface SnackBarProps extends Omit<SnackbarProps, "children" | "visible" | "onDismiss"> {
@@ -17,6 +17,7 @@ export interface ISnackBarGlobalComponent {
 
 function SnackBarGlobalComponent(_: any, ref: React.ForwardedRef<ISnackBarGlobalComponent>) {
 
+  const themeMD3 = useTheme();
   const [snackBarProps, setSnackBarProps] = useState<SnackBarProps>();
   const timeoutRef = useRef<NodeJS.Timeout>();
 
@@ -32,16 +33,16 @@ function SnackBarGlobalComponent(_: any, ref: React.ForwardedRef<ISnackBarGlobal
   const showSnackBar = useCallback((props: SnackBarProps) => {
     let theme = {
       colors: {
-        inverseSurface: MD3Colors.error20,
         inverseOnSurface: "white"
       }
-    }
-    switch (props?.type){
+    };
+    switch (props?.type) {
 
     }
 
     setSnackBarProps({
-      type: ESystemStatus.None, duration: 5000, onDismiss: () => {}, theme, ...props, visible: true
+      type: ESystemStatus.None, duration: 5000, onDismiss: () => {
+      }, theme, ...props, visible: true
     });
   }, []);
 

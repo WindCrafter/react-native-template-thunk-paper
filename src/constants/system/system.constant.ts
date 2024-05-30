@@ -5,3 +5,9 @@ export enum ESystemStatus {
   None,
   Success
 }
+
+export enum IThemeType{
+  Light,
+  ExactDark,
+  AdaptiveDark
+}

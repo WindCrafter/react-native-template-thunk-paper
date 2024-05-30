@@ -1,10 +1,12 @@
-import { Dimensions } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 // import analytics from "@react-native-firebase/analytics";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import DeviceInfo from "react-native-device-info";
 // import { MMKV } from "react-native-mmkv";
 import { Device } from "constants/system/device.constant";
+import { MD3Colors } from "react-native-paper/lib/typescript/types";
+import { MHS } from "constants/system/ui/sizes.ui.constant";
 
 // const storage = new MMKV();
 dayjs.extend(isBetween);
@@ -64,7 +66,6 @@ export const hs = horizontalScale;
 export const vs = verticalScale;
 export const mhs = moderateHorizontalScale;
 export const mvs = moderateVerticalScale;
-
 
 
 export const logEventAnalyticsHelper = async (event: string, dataObj = {}) => {

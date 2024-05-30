@@ -1,12 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { IThemeType } from "constants/system/system.constant";
 
 
 interface InitialState {
   language: string;
+  themeType: IThemeType;
 }
 
 export const initialState: InitialState = {
-  language: "en"
+  language: "en",
+  themeType: IThemeType.Light,
 };
 
 
