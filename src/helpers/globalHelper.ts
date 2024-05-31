@@ -1,11 +1,11 @@
 import * as React from "react";
 import { ILoadingGlobalComponentRef } from "components/global/loading.global.component";
-import { ISnackBarGlobalComponent, SnackBarProps } from "components/global/snackbar.global.component";
+import { ISnackBarGlobalComponentRef, SnackBarProps } from "components/global/snackbar.global.component";
 
 interface IGlobalHelperTyped {
   ViewShotRef: React.RefObject<any>;
   LoadingRef: React.RefObject<ILoadingGlobalComponentRef>;
-  SnackBarRef: React.RefObject<ISnackBarGlobalComponent>;
+  SnackBarRef: React.RefObject<ISnackBarGlobalComponentRef>;
 
   showLoadingHelper: (autoHide: boolean) => void;
   hideLoadingHelper: Function;
@@ -18,7 +18,7 @@ interface IGlobalHelperTyped {
  */
 export const ViewShotRef = React.createRef<any>();
 export const LoadingRef = React.createRef<ILoadingGlobalComponentRef>();
-export const SnackBarRef = React.createRef<ISnackBarGlobalComponent>();
+export const SnackBarRef = React.createRef<ISnackBarGlobalComponentRef>();
 
 
 /**

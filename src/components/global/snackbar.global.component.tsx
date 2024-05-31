@@ -11,12 +11,12 @@ export interface SnackBarProps extends Omit<SnackbarProps, "children" | "visible
   type?: ESystemStatus
 }
 
-export interface ISnackBarGlobalComponent {
+export interface ISnackBarGlobalComponentRef {
   showSnackBar: (snackBarProps: SnackBarProps) => void;
   hideSnackBar: Function;
 }
 
-function SnackBarGlobalComponent(_: any, ref: React.ForwardedRef<ISnackBarGlobalComponent>) {
+function SnackBarGlobalComponent(_: any, ref: React.ForwardedRef<ISnackBarGlobalComponentRef>) {
 
   const themeSystem = useTheme() as ITheme;
   const [snackBarProps, setSnackBarProps] = useState<SnackBarProps>();

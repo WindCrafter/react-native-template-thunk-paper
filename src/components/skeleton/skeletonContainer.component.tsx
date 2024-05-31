@@ -8,7 +8,7 @@ import { Device } from "constants/system/device.constant";
 import { Children, useCallback, useEffect, useMemo } from "react";
 
 
-interface ISkeletonContainerComponent {
+interface ISkeletonContainerComponentProps {
   /**
    * Determines component's children.
    */
@@ -41,7 +41,7 @@ export default function SkeletonContainerComponent({
                                                      speed = 800,
                                                      highlightColor = "#F2F8FC",
                                                      direction = "right"
-                                                   }: ISkeletonContainerComponent): JSX.Element {
+                                                   }: ISkeletonContainerComponentProps): JSX.Element {
   const [layout, setLayout] = React.useState<LayoutRectangle>();
   const animatedValue = React.useMemo(() => new Animated.Value(0), []);
   const translateX = React.useMemo(
