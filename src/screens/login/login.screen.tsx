@@ -2,7 +2,7 @@ import React from "react";
 import {StyleSheet, View} from "react-native";
 import {Button, TextInput} from "react-native-paper";
 import {MHS} from "constants/system/ui/sizes.ui.constant";
-import {useSystem} from "helpers/hooks/system.hook";
+import {useSystemTheme} from "helpers/hooks/system.hook";
 import {useAppDispatch} from "configs/store.config";
 import {ESystemStatus} from "constants/system/system.constant";
 import {ITheme} from "constants/system/ui/theme.constant";
@@ -10,7 +10,7 @@ import GlobalHelper from "helpers/globalHelper";
 
 
 export default function LoginScreen() {
-  const {styles} = useSystem(createStyles)
+  const {styles} = useSystemTheme(createStyles)
   const [text, setText] = React.useState("");
 
   const dispatch = useAppDispatch()

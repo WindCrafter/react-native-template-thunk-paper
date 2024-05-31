@@ -13,7 +13,7 @@ dayjs.extend(isBetween);
 
 type NamedStyles<T> = { [P in keyof T]: ViewStyle | TextStyle | ImageStyle };
 
-export function useSystem<T extends NamedStyles<T> | NamedStyles<any>>(createStyle?: (theme: ITheme) => T): {
+export function useSystemTheme<T extends NamedStyles<T> | NamedStyles<any>>(createStyle?: (theme: ITheme) => T): {
   styles: T,
   themeType: IThemeType,
   theme: ITheme
