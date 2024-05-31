@@ -18,7 +18,7 @@
 
 # Hướng dẫn sử dụng dành cho người lười
 
-> [**Hiển thị snackbar**]
+> [!**Hiển thị snackbar**]
 > Tôi đã nghĩ đến toast, alert, tuy nhiên để đơn giản, tôi chỉ để snackbar
 > ```tsx
 >    import GlobalHelper from "helpers/globalHelper";
@@ -31,7 +31,7 @@
 >    });
 > ```
 
-> **Hiển thị loading toàn màn hình**
+> [!Hiển thị loading toàn màn hình]
 > Tôi cung cấp một cách để hiển thị loading toàn màn hình và tùy chọn tự động tắt nếu bạn sợ một vấn đề bất kỳ khiến nó bị treo, chặn người dùng thao tác
 > ```tsx
 >    import GlobalHelper from "helpers/globalHelper";
