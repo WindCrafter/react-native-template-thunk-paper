@@ -38,6 +38,7 @@ Dự án hỗ trợ theme và tôi cũng đã cài đặt sẵn việc chuyển 
 ### Tạo logo, splash screen
 ### Thay đổi tên dự án
 ### Log lại thay đổi các bản cập nhật
+### Ghi nhận log lên railway
 
 
 # Giới thiệu các hàm hỗ trợ

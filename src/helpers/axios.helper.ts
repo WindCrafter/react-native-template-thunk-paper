@@ -1,12 +1,14 @@
+import { getTypeOfAttributesHelper } from "helpers/object.helper";
+import { setBugLogHelper } from "helpers/storage.helper";
+
 /**
- * @author Tran Ba Phuc
  * @param errorData
  * @returns
  */
-export function getErrorMessage(errorData) {
+export function getErrorMessage(errorData: any) {
   let message = errorData.message;
   if (errorData.fieldErrors) {
-    errorData.fieldErrors.forEach((fErr) => {
+    errorData.fieldErrors.forEach((fErr: any) => {
       message += `\nfield: ${fErr.field},  Object: ${fErr.objectName}, message: ${fErr.message}\n`;
     });
   }
@@ -14,12 +16,13 @@ export function getErrorMessage(errorData) {
 }
 
 
+
 // Middleware function definition
 export default function errorMiddleware() {
   // Returns the next middleware function
-  return (next) => {
+  return (next: any) => {
     // Returns the actual middleware function that handles the action
-    return (action) => {
+    return (action: any) => {
       /**
        * The error middleware serves to log error messages from dispatch.
        * It need not run in production.
@@ -66,3 +69,32 @@ export default function errorMiddleware() {
     };
   };
 };
+
+
+export function createLogsFromResponseHelper(response: any, isError: boolean) {
+  if (__DEV__) return;
+
+  let dataToLog: any = {
+    endpoint: response?.config?.url,
+    hasAuth: !!response?.config?.headers?.["X-Authorization"],
+    type: response?.config?.method,
+    data: getTypeOfAttributesHelper(response?.config?.data),
+    responseCode: isError ? response.status || (response.response ? response?.response?.status : 0) : response?.status,
+    typeOfResponse: getTypeOfAttributesHelper(response?.data)
+  };
+
+  if (isError) {
+    dataToLog = {
+      ...dataToLog,
+      error: response?.response?.data?.error,
+      messageError: response?.response?.data?.message
+    };
+  }
+  setBugLogHelper("|*|API_" + JSON.stringify(dataToLog));
+
+  if (isError) {
+    setTimeout(() => {
+      // createBugToFilesStoreHelper(response?.response?.data?.message || "", "", "api", navigationHelper.getRouteName() || "");
+    }, 500);
+  }
+}

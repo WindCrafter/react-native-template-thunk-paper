@@ -2,11 +2,12 @@ import { AnyAction, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { persistReducer, persistStore, Storage } from "redux-persist";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
-import reducer, { RootReducer } from "store/index";
+import reducer, { BLACK_LIST, RootReducer, WHITE_LIST } from "store/index";
 import { MMKV } from "react-native-mmkv";
+import logger from "redux-logger";
+import { customLogStoreHelper } from "helpers/redux.helper";
 
 const storage = new MMKV();
-
 export const reduxStorage: Storage = {
   setItem: (key, value) => {
     storage.set(key, value);
@@ -25,15 +26,10 @@ export const reduxStorage: Storage = {
 const persistConfig = {
   key: "root",
   storage: reduxStorage,
-  blacklist: [],
-  whitelist: ["user", "system"],
+  blacklist: BLACK_LIST,
+  whitelist: WHITE_LIST,
   stateReconciler: autoMergeLevel2
 };
-
-
-/**
- * add Any to reduce error
- */
 
 
 const persistedReducer = persistReducer<RootReducer>(persistConfig, reducer);
@@ -44,7 +40,7 @@ const store = configureStore({
     return getDefaultMiddleware({
       immutableCheck: { warnAfter: 50 },
       serializableCheck: false
-    });
+    }).concat(logger).concat(customLogStoreHelper)
   }
 });
 
