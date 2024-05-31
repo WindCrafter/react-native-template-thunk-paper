@@ -18,7 +18,7 @@
 
 # Hướng dẫn sử dụng dành cho người lười
 
-> **Hiển thị snackbar**
+> [**Hiển thị snackbar**]
 > Tôi đã nghĩ đến toast, alert, tuy nhiên để đơn giản, tôi chỉ để snackbar
 > ```tsx
 >    import GlobalHelper from "helpers/globalHelper";
