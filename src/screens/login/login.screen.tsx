@@ -1,12 +1,14 @@
 import React, { useCallback, useRef } from "react";
 import { StyleSheet, View } from "react-native";
-import { Button, Text, TextInput } from "react-native-paper";
+import { Text } from "react-native-paper";
 import { MHS } from "constants/system/ui/sizes.ui.constant";
 import { useSystemTheme } from "helpers/hooks/system.hook";
 import { useAppDispatch } from "configs/store.config";
 import { ITheme } from "constants/system/ui/theme.constant";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
-import SkeletonContainerComponent from "components/skeleton/skeletonContainer.component";
+import TextInputBase from "components/base/textInput.base";
+import ButtonBase from "components/base/button.base";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 
 export default function LoginScreen() {
@@ -36,15 +38,15 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      <Text variant={"displayMedium"}>{"Login"}</Text>
-      <TextInput
+      <Text variant={"displayMedium"} >{"Login"}</Text>
+      <TextInputBase
         label="Email"
         value={text}
         style={styles.input}
         onChangeText={text => setText(text)}
         mode={"outlined"}
       />
-      <TextInput
+      <TextInputBase
         label="Password"
         value={text}
         style={styles.input}
@@ -53,9 +55,9 @@ export default function LoginScreen() {
         secureTextEntry
       />
 
-      <Button onPress={login} mode={"contained"}>
+      <ButtonBase onPress={login} mode={"contained"}>
         Login
-      </Button>
+      </ButtonBase>
 
       <BottomSheet
         ref={bottomSheetRef}
