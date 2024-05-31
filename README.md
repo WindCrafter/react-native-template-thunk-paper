@@ -66,8 +66,11 @@ Tôi cung cấp một cách để hiển thị loading toàn màn hình và tùy
 ```tsx
 import GlobalHelper from "helpers/globalHelper";
 
-//Hiển thị loading, autoHideLoading là dạng boolean
-GlobalHelper.showLoadingHelper(autoHideLoading);
+//Hiển thị loading
+GlobalHelper.showLoadingHelper();
+//hoặc tự động ẩn và thời gian hiển thị
+GlobalHelper.showLoadingHelper(true, duration);
+
 
 //Ẩn loading
 GlobalHelper.hideLoadingHelper();

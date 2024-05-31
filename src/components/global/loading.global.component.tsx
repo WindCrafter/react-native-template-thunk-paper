@@ -5,7 +5,7 @@ import { ActivityIndicator, MD2Colors } from "react-native-paper";
 
 
 export interface ILoadingGlobalComponentRef {
-  showLoading: (autoHide: boolean) => void;
+  showLoading: (autoHide: boolean, duration?: number) => void;
   hideLoading: Function;
 }
 
@@ -23,7 +23,7 @@ function LoadingGlobalComponent(_: any, ref: React.ForwardedRef<ILoadingGlobalCo
     []
   );
 
-  const showLoading = useCallback((autoHide: boolean = true) => {
+  const showLoading = useCallback((autoHide: boolean = true, duration: number = 10000) => {
     setLoading(true);
     /**
      * Auto hide Loading if loading more than 10 seconds
@@ -32,13 +32,13 @@ function LoadingGlobalComponent(_: any, ref: React.ForwardedRef<ILoadingGlobalCo
       timeoutRef.current = setTimeout(() => {
         setLoading(false);
         clearTimeout(timeoutRef.current);
-      }, 10000);
+      }, duration);
     }
-  },[]);
+  }, []);
 
   const hideLoading = useCallback(() => {
     setLoading(false);
-  },[]);
+  }, []);
 
   if (!isLoading) {
     return null;
