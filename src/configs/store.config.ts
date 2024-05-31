@@ -32,7 +32,6 @@ const persistConfig = {
 
 
 /**
- * Jamviet.com
  * add Any to reduce error
  */
 

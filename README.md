@@ -17,31 +17,28 @@
 
 
 # Hướng dẫn sử dụng dành cho người lười
+## Store
+Dự án sử dụng kiến trúc redux-thunk để quản lý global states và làm việc với api.
 
-> [!**Hiển thị snackbar**]
-> Tôi đã nghĩ đến toast, alert, tuy nhiên để đơn giản, tôi chỉ để snackbar
-> ```tsx
->    import GlobalHelper from "helpers/globalHelper";
->    
->    GlobalHelper.showSnackBarHelper({
->      content: "Hello",
->      duration: 2000,
->      elevation: 5,
->      type: ESystemStatus.Warning
->    });
-> ```
+Các hàm thunk cả api và reducer trực tiếp tôi đều để hậu tố là thunk, bạn có thể gọi chúng với dispatch hoặc sử dụng hook callThunk nếu muốn xử lý thêm logic
 
-> [!Hiển thị loading toàn màn hình]
-> Tôi cung cấp một cách để hiển thị loading toàn màn hình và tùy chọn tự động tắt nếu bạn sợ một vấn đề bất kỳ khiến nó bị treo, chặn người dùng thao tác
-> ```tsx
->    import GlobalHelper from "helpers/globalHelper";
->    
->    //Hiển thị loading, autoHideLoading là dạng boolean
->    GlobalHelper.showLoadingHelper(autoHideLoading);
->
->    //Ẩn loading
->    GlobalHelper.hideLoadingHelper();
-> ```
+## UI
+Tôi sử dụng react-native-paper để làm bộ khung components chính, bên cạnh đó tích hợp sẵn các component bên ngoài như date picker, time picker, multiple style text, secret button, v.v.. để có thể sử dụng thuận tiện nhất khay khi cần
+
+Dự án có một vài biến hỗ trợ như các thông số của Device (loại devive, kích thước, v.v..), các hằng số cho đổ bóng, kích thước, style sẵn để sử dụng thuận tiện và nâng cao hiệu suất (có thể nó nhỏ nhưng tôi tin 1000 cái nhỏ cũng sẽ giúp cải thiện hiệu năng)
+
+Về responsive thì tôi sử dụng các hàm tính toán để scale giao diện theo chiều dọc, chiều ngang (có thể thêm hệ số) nhằm giúp ứng dụng tương thích đa nền tảng, tôi cũng xuất các giá trị đó thành hằng số HS, VS, MHS, MVS để tránh việc tính toán nhiều, một vài hằng số khác như Fontsize sẽ thích hợp để scale text và icon
+
+Dự án hỗ trợ theme và tôi cũng đã cài đặt sẵn việc chuyển theme bằng ```setThemeTypeThunk``` và hàm ```createStyles```, hook ```useSystemStyles``` để sử dụng theme trong style cho giao diện
+
+## Tiện ích
+### Đa ngôn ngữ
+### Ghi lại hành động thao tác
+### Ghi nhận lỗi từ người dùng
+### Tạo logo, splash screen
+### Thay đổi tên dự án
+### Log lại thay đổi các bản cập nhật
+
 
 # Giới thiệu các hàm hỗ trợ
 
@@ -50,3 +47,28 @@
 
 ### useSystemTheme
 Hook này dùng để lấy các thông tin quan trọng của hệ thống, cho phép nhận vào một stylesheet và trả về một stylesheet mới được áp dụng theme hiện tại  
+
+## Các helper
+#### Hiển thị snackbar
+Tôi đã nghĩ đến toast, alert, tuy nhiên để đơn giản, tôi chỉ để snackbar
+```tsx
+import GlobalHelper from "helpers/globalHelper";
+import {ESystemStatus} from "constants/system/system.constant";
+
+GlobalHelper.showSnackBarHelper({
+  content: "Hello",
+  type: ESystemStatus.Warning
+});
+```
+---
+#### Hiển thị loading toàn màn hình
+Tôi cung cấp một cách để hiển thị loading toàn màn hình và tùy chọn tự động tắt nếu bạn sợ một vấn đề bất kỳ khiến nó bị treo, chặn người dùng thao tác
+```tsx
+import GlobalHelper from "helpers/globalHelper";
+
+//Hiển thị loading, autoHideLoading là dạng boolean
+GlobalHelper.showLoadingHelper(autoHideLoading);
+
+//Ẩn loading
+GlobalHelper.hideLoadingHelper();
+```
