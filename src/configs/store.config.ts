@@ -6,6 +6,7 @@ import reducer, { BLACK_LIST, RootReducer, WHITE_LIST } from "store/index";
 import { MMKV } from "react-native-mmkv";
 import logger from "redux-logger";
 import { customLogStoreHelper } from "helpers/redux.helper";
+import Config from "react-native-config";
 
 const storage = new MMKV();
 export const reduxStorage: Storage = {
@@ -37,10 +38,22 @@ const persistedReducer = persistReducer<RootReducer>(persistConfig, reducer);
 const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) => {
+
+
+    /**
+     * Well, maybe you need store's logs, But I don't =)), so I turn off it from .env
+     */
+    if(Config.LOG_STORE_REDUX === "true"){
+      return getDefaultMiddleware({
+        immutableCheck: { warnAfter: 50 },
+        serializableCheck: false
+      }).concat(logger).concat(customLogStoreHelper)
+    }
+
     return getDefaultMiddleware({
       immutableCheck: { warnAfter: 50 },
       serializableCheck: false
-    }).concat(logger).concat(customLogStoreHelper)
+    })
   }
 });
 
