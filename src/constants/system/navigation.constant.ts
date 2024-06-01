@@ -1,3 +1,5 @@
+/**
+ * List of screen's name
+ */
 export const NAVIGATION_HOME_SCREEN = 'NAVIGATION_HOME_SCREEN'
-
 export const NAVIGATION_LOGIN_SCREEN = 'NAVIGATION_LOGIN_SCREEN'

@@ -1,74 +1,77 @@
 import {createNavigationContainerRef, StackActions} from '@react-navigation/native';
 
-export const navigationRef = createNavigationContainerRef()
+export let TIMESTAMP_LAST_SCREEN_OPENING = 0
+
+namespace NavigationHelper{
+
+  export const navigationRef = createNavigationContainerRef()
 
 // @ts-ignore
-const navigate = (name, params?) => {
-  if (navigationRef.isReady()) {
-    // @ts-ignore
-    navigationRef.navigate(name, params);
-  }
-}
-
-const push = (name, params?) => {
-  if (navigationRef.isReady()) {
-    navigationRef.dispatch(StackActions.push(name, params))
-  }
-}
-
-const pop = (n = 1) => {
-  if (navigationRef.isReady()) {
-    navigationRef.dispatch(StackActions.pop(n))
-  }
-}
-
-
-const goBack = () => {
-  if (navigationRef.isReady()) {
-    try {
+  export const navigate = (name, params?) => {
+    if (navigationRef.isReady()) {
       // @ts-ignore
-      navigationRef.goBack();
-    } catch (error) {
-
+      navigationRef.navigate(name, params);
     }
   }
-}
 
-const canGoBack = () => {
-  return navigationRef.canGoBack()
-}
-
-const getRouteName = () => {
-  if (navigationRef.isReady()) {
-    return navigationRef.getCurrentRoute()?.name
-  }
-  return ""
-}
-
-const getActiveRouteName = (state) => {
-  const route = state?.routes?.[state.index];
-
-  if (route?.state) {
-    // Dive into nested navigators
-    return getActiveRouteName(route.state);
+  export const push = (name, params?) => {
+    if (navigationRef.isReady()) {
+      navigationRef.dispatch(StackActions.push(name, params))
+    }
   }
 
-  return route?.name;
-}
+  export const pop = (n = 1) => {
+    if (navigationRef.isReady()) {
+      navigationRef.dispatch(StackActions.pop(n))
+    }
+  }
 
-const replace = (name, params = {}) => {
-  if (navigationRef.isReady() && getRouteName() !== name) {
-    navigationRef.dispatch(StackActions.replace(name, params))
+
+  export const goBack = () => {
+    if (navigationRef.isReady()) {
+      try {
+        // @ts-ignore
+        navigationRef.goBack();
+      } catch (error) {
+
+      }
+    }
+  }
+
+  export const canGoBack = () => {
+    return navigationRef.canGoBack()
+  }
+
+  export const getRouteName = () => {
+    if (navigationRef.isReady()) {
+      return navigationRef.getCurrentRoute()?.name
+    }
+    return ""
+  }
+
+  export const getActiveRouteName = (state) => {
+    const route = state?.routes?.[state.index];
+
+    if (route?.state) {
+      // Dive into nested navigators
+      return getActiveRouteName(route.state);
+    }
+
+    return route?.name;
+  }
+
+  export const replace = (name, params = {}) => {
+    if (navigationRef.isReady() && getRouteName() !== name) {
+      navigationRef.dispatch(StackActions.replace(name, params))
+    }
+  }
+
+  /**
+   * Variable to store the timestamp of screen opening
+   */
+  export function updateTimestampLastScreenOpening() {
+    TIMESTAMP_LAST_SCREEN_OPENING = new Date().getTime()
   }
 }
 
-export default {
-  navigate,
-  getRouteName,
-  goBack,
-  getActiveRouteName,
-  replace,
-  push,
-  pop,
-  canGoBack
-}
+export default NavigationHelper

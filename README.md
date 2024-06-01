@@ -34,6 +34,9 @@ Dự án hỗ trợ theme và tôi cũng đã cài đặt sẵn việc chuyển 
 ## Tiện ích
 ### Đa ngôn ngữ
 ### Ghi lại hành động thao tác
+#### Cài đặt
+> Cài đặt Firebase với thư viện [React Native Firebase](https://rnfirebase.io)
+* Tạo một project firebase
 ### Ghi nhận lỗi từ người dùng
 ### Tạo logo, splash screen
 ### Thay đổi tên dự án

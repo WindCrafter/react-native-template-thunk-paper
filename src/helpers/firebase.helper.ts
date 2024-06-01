@@ -1,3 +1,7 @@
+import analytics, {firebase} from '@react-native-firebase/analytics';
+import Config from "react-native-config";
+import dayjs from "dayjs";
+import NavigationHelper, {TIMESTAMP_LAST_SCREEN_OPENING} from "helpers/navigation.helper";
 // import notifee, {EventType} from "@notifee/react-native";
 // import messaging from "@react-native-firebase/messaging";
 // import getStore from "configs/store.config";
@@ -35,6 +39,10 @@
 // const store = getStore();
 // const actions = bindActionCreators({setTokenFirebase, setDetailRoom}, store.dispatch);
 //
+//
+// /**
+//  * Notification
+//  */
 // async function requestUserPermissionHelper() {
 //   await notifee.requestPermission();
 //   const authStatus = await messaging().requestPermission();
@@ -375,12 +383,38 @@
 // }
 //
 //
-// export {
-//   NotificationHelperHelper,
-//   createDefaultChannelsHelper,
-//   getFCMTokenHelper,
-//   requestUserPermissionHelper,
-//   cleanLogBugsHelper,
-//   createBugToFilesStoreHelper
-// };
+// /**
+//  * Logs
+//  */
 //
+
+namespace FirebaseHelper {
+
+
+    /**
+     * Logs
+     */
+    export function logEventAnalytics({event, dataObj = {}, logWithTime = false}: { event: string, dataObj?: object, logWithTime?: boolean }) {
+        try {
+            if (!__DEV__ && Config.LOG_EVENT_TO_FIREBASE?.toLowerCase() === "true") {
+                if(logWithTime){
+                    event = `${event}_${dayjs(TIMESTAMP_LAST_SCREEN_OPENING).diff(dayjs(),"second")}`
+                }
+                analytics().logEvent(event, dataObj);
+            }
+        } catch (error) {
+
+        }
+    }
+
+    export function logScreenView(screen:string) {
+        firebase.analytics().logScreenView({
+            screen_name: screen,
+            screen_class: screen
+        }).catch(console.log);
+    }
+
+
+}
+
+export default FirebaseHelper

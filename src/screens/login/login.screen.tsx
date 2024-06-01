@@ -7,7 +7,7 @@ import {useAppDispatch} from "configs/store.config";
 import {ITheme} from "constants/system/ui/theme.constant";
 import BottomSheet from "@gorhom/bottom-sheet";
 import TextInputBase from "components/base/textInput.base";
-import ButtonBase from "components/base/button.base";
+import BButton from "components/base/button.base";
 import BTextMulti from "components/base/multiText.base";
 
 
@@ -57,12 +57,12 @@ export default function LoginScreen() {
             />
 
 
-            <BTextMulti style1={{color: "red", fontWeight:'bold'}} style2={{color: 'green', fontSize: 20}}
+            <BTextMulti style1={{color: "red", fontWeight: 'bold'}} style2={{color: 'green', fontSize: 20}}
                         style3={{color: "blue", fontSize: 10}}>{"hello |||every||| body"}</BTextMulti>
 
-            <ButtonBase onPress={login} mode={"contained"}>
+            <BButton onPress={login} mode={"contained"} eventKey={"login"}>
                 Login
-            </ButtonBase>
+            </BButton>
 
         </View>
     );

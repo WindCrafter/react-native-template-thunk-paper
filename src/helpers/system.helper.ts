@@ -68,17 +68,6 @@ export const mhs = moderateHorizontalScale;
 export const mvs = moderateVerticalScale;
 
 
-export const logEventAnalyticsHelper = async (event: string, dataObj = {}) => {
-  // try {
-  //   if (__DEV__) {
-  //     return;
-  //   }
-  //   return await analytics().logEvent(event, dataObj);
-  // } catch (error) {
-  //
-  // }
-  return;
-};
 
 
 type TypedCallApi = {

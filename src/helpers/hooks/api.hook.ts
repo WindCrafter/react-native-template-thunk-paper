@@ -29,11 +29,11 @@ export const useAPI = <T>() => {
                              actionFailed
                            }: IUseAPI.ICallThunk) => {
     if (showLoading) {
-      GlobalHelper.showLoadingHelper(autoHideLoading);
+      GlobalHelper.showLoading(autoHideLoading);
     }
 
     const res = await dispatch(dispatchFunction?.(params));
-    GlobalHelper.hideLoadingHelper();
+    GlobalHelper.hideLoading();
 
     if (res.payload?.data) {
       if (actionSuccess) {

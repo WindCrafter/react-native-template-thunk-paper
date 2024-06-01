@@ -43,7 +43,7 @@ const store = configureStore({
     /**
      * Well, maybe you need store's logs, But I don't =)), so I turn off it from .env
      */
-    if(Config.LOG_STORE_REDUX === "true"){
+    if(Config.LOG_STORE_REDUX?.toLowerCase() === "true"){
       return getDefaultMiddleware({
         immutableCheck: { warnAfter: 50 },
         serializableCheck: false
