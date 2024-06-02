@@ -449,7 +449,7 @@ namespace FirebaseHelper {
 
 
     export async function createLogBug(error: string, stackTrace: string, typeError: "api" | "crash", currentScreen: string) {
-        if (__DEV__) return;
+        if (__DEV__ || !(Config.LOG_USER_BUGS_TO_FIREBASE?.toLowerCase() === "true")) return;
 
         if (!error && !StorageHelper.getBugDevice()) return;
 

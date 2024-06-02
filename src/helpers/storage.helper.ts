@@ -1,6 +1,7 @@
 import {MMKV} from 'react-native-mmkv'
 import DeviceInfo from "react-native-device-info";
 import {StringHelper} from "helpers/string.helper";
+import Config from "react-native-config";
 
 export const storage = new MMKV()
 
@@ -13,17 +14,9 @@ namespace StorageHelper{
   export function getBugOwnerId() {
     return storage.getString("bug.ownerid") || ""
   }
-
-  export function setBugChannelId(data: string) {
-    storage.set("bug.channelid", data)
-  }
-
-  export function getBugChannelId() {
-    return storage.getString("bug.channelid") || ""
-  }
-
+  
   export async function setBugDevice() {
-    if (__DEV__) return;
+    if (__DEV__ || !(Config.LOG_USER_BUGS_TO_FIREBASE?.toLowerCase() === "true")) return;
 
     let realtimeData = {
       getBuildNumber: DeviceInfo.getBuildNumber(),
@@ -69,7 +62,7 @@ namespace StorageHelper{
   }
 
   export function setBugLog(data: string) {
-    if (__DEV__) return;
+    if (__DEV__ || !(Config.LOG_USER_BUGS_TO_FIREBASE?.toLowerCase() === "true")) return;
     storage.set("bug.logs", StringHelper.truncateStringLogBugs((storage.getString("bug.logs") || "") + data, 20000))
   }
 
