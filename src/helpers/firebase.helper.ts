@@ -1,7 +1,20 @@
 import analytics, {firebase} from '@react-native-firebase/analytics';
 import Config from "react-native-config";
 import dayjs from "dayjs";
-import NavigationHelper, {TIMESTAMP_LAST_SCREEN_OPENING} from "helpers/navigation.helper";
+import utc from "dayjs/plugin/utc";
+import {TIMESTAMP_LAST_SCREEN_OPENING} from "helpers/navigation.helper";
+import firestore from "@react-native-firebase/firestore";
+import GlobalHelper from "helpers/globalHelper";
+import {Device} from "constants/system/device.constant";
+import FirebaseConstant from "constants/firebase.constant";
+import storage from '@react-native-firebase/storage';
+import {StringHelper} from "helpers/string.helper";
+import StorageHelper from "helpers/storage.helper";
+import {MMKV} from "react-native-mmkv";
+import {ENVIRONMENT} from "configs";
+
+
+dayjs.extend(utc)
 // import notifee, {EventType} from "@notifee/react-native";
 // import messaging from "@react-native-firebase/messaging";
 // import getStore from "configs/store.config";
@@ -390,15 +403,35 @@ import NavigationHelper, {TIMESTAMP_LAST_SCREEN_OPENING} from "helpers/navigatio
 
 namespace FirebaseHelper {
 
+    /**
+     * File
+     */
+    export async function updateFile(filePath: string, folderName: string, fileName?: string): Promise<string> {
+        let reference = storage().ref(`/${folderName}/${fileName || (dayjs.utc().format(`img_HH_mm_SSS_DD_MM_YY`) + (StringHelper.getExtensionFileByPath(filePath) && ("." + StringHelper.getExtensionFileByPath(filePath))))}`);
+        return await reference.putFile(filePath)
+            .then(async (result) => {
+                if(result.state === "success"){
+                    return await reference.getDownloadURL()
+                }
+                return ""
+            }).catch(()=>{
+                return ""
+            })
+    }
+
 
     /**
      * Logs
      */
-    export function logEventAnalytics({event, dataObj = {}, logWithTime = false}: { event: string, dataObj?: object, logWithTime?: boolean }) {
+    export function logEventAnalytics({event, dataObj = {}, logWithTime = false}: {
+        event: string,
+        dataObj?: object,
+        logWithTime?: boolean
+    }) {
         try {
             if (!__DEV__ && Config.LOG_EVENT_TO_FIREBASE?.toLowerCase() === "true") {
-                if(logWithTime){
-                    event = `${event}_${dayjs(TIMESTAMP_LAST_SCREEN_OPENING).diff(dayjs(),"second")}`
+                if (logWithTime) {
+                    event = `${event}_${dayjs(TIMESTAMP_LAST_SCREEN_OPENING).diff(dayjs(), "second")}`
                 }
                 analytics().logEvent(event, dataObj);
             }
@@ -407,13 +440,88 @@ namespace FirebaseHelper {
         }
     }
 
-    export function logScreenView(screen:string) {
+    export function logScreenView(screen: string) {
         firebase.analytics().logScreenView({
             screen_name: screen,
             screen_class: screen
         }).catch(console.log);
     }
 
+
+    export async function createLogBug(error: string, stackTrace: string, typeError: "api" | "crash", currentScreen: string) {
+        if (__DEV__) return;
+
+        if (!error && !StorageHelper.getBugDevice()) return;
+
+        //check new log
+        const oldLog = await firestore().collection("Bugs").doc(currentScreen + dayjs.utc().format("_DD_MM_YY")).get();
+        if (oldLog.exists) return;
+        let checkDoneAddBug = false;
+
+        let timeMark = new Date().getTime();
+
+        GlobalHelper.ViewShotRef?.current.capture().then(async (uri: string) => {
+            await updateFile(
+                Device.isIos ? uri?.replace("file://", "") : uri,
+                "screenshots",
+                timeMark + ".jpg"
+            )
+                .then(async (screenShotUrl: string) => {
+                    await firestore()
+                        .collection("Bugs")
+                        .doc(currentScreen + dayjs.utc().format("_DD_MM_YY"))
+                        .set({
+                            device: StorageHelper.getBugDevice(),
+                            status: FirebaseConstant.ETypeOfBug.New,
+                            user: StorageHelper.getBugOwnerId(),
+                            time: timeMark,
+                            isDevSite: (new MMKV().getString("env") || (__DEV__ ? ENVIRONMENT.DEVELOP : ENVIRONMENT.PRODUCT)) === ENVIRONMENT.DEVELOP,
+                            detail: StorageHelper.getBugLog(),
+                            type: typeError,
+                            error: error,
+                            stackTrace: stackTrace,
+                            screenShot: screenShotUrl
+                        })
+                        .then(() => {
+                            console.log("Bug added!");
+                            checkDoneAddBug = true;
+                        })
+                        .catch((error) => {
+                            console.log(error, "kdfmene")
+                        });
+                })
+                .catch((error: any) => {
+                    console.log(error, "ajsdjhasd")
+                })
+
+            if (!checkDoneAddBug) {
+                firestore()
+                    .collection("Bugs")
+                    .doc(currentScreen + dayjs.utc().format("_DD_MM_YY"))
+                    .set({
+                        device: StorageHelper.getBugDevice(),
+                        status: FirebaseConstant.ETypeOfBug.New,
+                        user: StorageHelper.getBugOwnerId(),
+                        time: timeMark,
+                        isDevSite: (new MMKV().getString("env") || (__DEV__ ? ENVIRONMENT.DEVELOP : ENVIRONMENT.PRODUCT)) === ENVIRONMENT.DEVELOP,
+                        detail: StorageHelper.getBugLog(),
+                        type: typeError,
+                        error: error,
+                        stackTrace: stackTrace
+                    })
+                    .then(() => {
+                        console.log("Bug added!");
+                    })
+                    .catch((error) => {
+                        console.log(error, "sdjsf")
+                    });
+            }
+        }).catch((error: any) => {
+            console.log(error, "errorjmdbmvb")
+        })
+
+
+    }
 
 }
 

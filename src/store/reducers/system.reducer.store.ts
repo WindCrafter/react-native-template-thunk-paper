@@ -17,10 +17,10 @@ export const system = createSlice({
   name: "system",
   initialState: initialState,
   reducers: {
-    setLanguageThunk: (state, action: {payload: string}) => {
+    setLanguageThunk: (state: InitialState, action: {payload: string}) => {
       state.language = action.payload;
     },
-    setThemeTypeThunk: (state, action:{payload: IThemeType}) => {
+    setThemeTypeThunk: (state: InitialState, action:{payload: IThemeType}) => {
       state.themeType = action.payload;
     }
   },

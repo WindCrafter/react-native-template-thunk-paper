@@ -14,6 +14,9 @@ export const FontSize = {
 
 
   _2: mhs(2, 0.3),
+  _16: mhs(16, 0.3),
+  _18: mhs(18, 0.3),
+  _22: mhs(22, 0.3),
 
 };
 
@@ -22,6 +25,9 @@ export const FontSize = {
  */
 export const HS = {
   _1: hs(1),
+  _6: hs(6),
+  _20: hs(20),
+  _24: hs(24),
 };
 
 /**
@@ -30,6 +36,9 @@ export const HS = {
 export const VS = {
   _1: vs(1),
   _10: vs(10),
+  _12: vs(12),
+  _16: vs(16),
+  _20: vs(20),
   _50: vs(50),
   _160: vs(160),
   _32: vs(32),
@@ -40,7 +49,13 @@ export const VS = {
  */
 export const MHS = {
   _1: mhs(1),
+  _4: mhs(4),
+  _6: mhs(6),
+  _8: mhs(8),
+  _10: mhs(10),
+  _12: mhs(12),
   _16: mhs(16),
+  _18: mhs(18),
   _140: mhs(140),
 };
 

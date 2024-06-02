@@ -1,14 +1,16 @@
-import React, {useCallback, useRef} from "react";
+import React, {useCallback} from "react";
 import {StyleSheet, View} from "react-native";
 import {Text} from "react-native-paper";
 import {MHS} from "constants/system/ui/sizes.ui.constant";
 import {useSystemTheme} from "helpers/hooks/system.hook";
 import {useAppDispatch} from "configs/store.config";
 import {ITheme} from "constants/system/ui/theme.constant";
-import BottomSheet from "@gorhom/bottom-sheet";
 import TextInputBase from "components/base/textInput.base";
 import BButton from "components/base/button.base";
 import BTextMulti from "components/base/multiText.base";
+import {setIsAuthenticatedThunk} from "store/reducers/user.reducer.store";
+import GlobalHelper from "helpers/globalHelper";
+import {ESystemStatus} from "constants/system/system.constant";
 
 
 export default function LoginScreen() {
@@ -16,18 +18,14 @@ export default function LoginScreen() {
     const [text, setText] = React.useState("");
 
     const dispatch = useAppDispatch();
-    // ref
-    const bottomSheetRef = useRef<BottomSheet>(null);
 
 
     function login() {
-        // GlobalHelper.showSnackBarHelper({
-        //   content: "Hello",
-        //   duration: 2000,
-        //   elevation: 5,
-        //   type: ESystemStatus.Warning
-        // });
-        bottomSheetRef.current?.expand();
+        dispatch(setIsAuthenticatedThunk(true))
+        GlobalHelper.showSnackBar({
+            content:"Login success!!!",
+            type: ESystemStatus.Success
+        })
     }
 
 

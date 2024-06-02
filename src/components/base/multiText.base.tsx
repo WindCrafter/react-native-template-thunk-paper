@@ -30,9 +30,9 @@ export default function BTextMulti({text, children, ...props}: IBTextMultiProps 
 
     const renderMultiText = () => {
         let contentSegments = (content as string).split("|||")
-        let currentStyle: StyleProp<TextStyle> | undefined = undefined
+        let currentStyle: StyleProp<TextStyle> = {}
         return contentSegments.map((contentSegment, index) => {
-            currentStyle = props[`style${(Math.min(index, 21)) + 1}`] || {}
+            currentStyle = [currentStyle, props[`style${(Math.min(index, 21)) + 1}`] || {}]
             return <Text key={index.toString()} style={currentStyle}>{contentSegment}</Text>
         })
     }

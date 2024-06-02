@@ -5,6 +5,11 @@ namespace FirebaseConstant{
          */
         BTN="btn",
     }
+
+    export enum ETypeOfBug {
+        New = "new",
+        Fixed = "fixed"
+    }
 }
 
 export default FirebaseConstant

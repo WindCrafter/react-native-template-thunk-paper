@@ -1805,18 +1805,33 @@
     prompts "^2.4.0"
     semver "^7.5.2"
 
-"@react-native-firebase/analytics@^20.0.0":
-  version "20.0.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-20.0.0.tgz#162ec36b758f664ff56725f6943bdb08150381e7"
-  integrity sha512-FSTr/FwzJOVYpUyd4xFWjeC0hPT9vwtwK4tObzAk4FDwgT6xZ/SrfkMTNh4PJHQX8RltqN5YZ85n8NenG3OGgw==
+"@react-native-community/clipboard@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/clipboard/-/clipboard-1.5.1.tgz#32abb3ea2eb91ee3f9c5fb1d32d5783253c9fabe"
+  integrity sha512-AHAmrkLEH5UtPaDiRqoULERHh3oNv7Dgs0bTC0hO5Z2GdNokAMPT5w8ci8aMcRemcwbtdHjxChgtjbeA38GBdA==
 
-"@react-native-firebase/app@^20.0.0":
-  version "20.0.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-20.0.0.tgz#0aae0fdaaa0db48f6b248fb410e18687e285f2e1"
-  integrity sha512-h9Xgmj0Z0ga1ponhDnQ63yqkX288LOW+ZvstDWHDo2rgPu58nbAmdzs73MTmPjYdgm5Elm71puG1NRJX5n7wRw==
+"@react-native-firebase/analytics@19.3.0":
+  version "19.3.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-19.3.0.tgz#912e93a9a99eb9c5a8ceb7ad39dca4761274fb98"
+  integrity sha512-I+LSDvA2crn8UY78StCqatrUkBD/ZBVaQaunZYnEd4Nsm1R7HycSaW1iUzAB+3sbwLchFr4RcPc++P20m+zzHA==
+
+"@react-native-firebase/app@19.3.0":
+  version "19.3.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-19.3.0.tgz#d243d31ce0ed6082292a14d42ed11d536831018b"
+  integrity sha512-Y4Jlu7s7JasCcOktAN9LC+7SvMeAG04008OxtbhDK9rpatVznJqRSkMefIIwN2yBs94MWo9b61e+7v5IRMbQdw==
   dependencies:
     opencollective-postinstall "^2.0.3"
     superstruct "^0.6.2"
+
+"@react-native-firebase/firestore@19.3.0":
+  version "19.3.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-19.3.0.tgz#e10e8f043d5e3a574e9eac9d8846d4b6e7dc8c22"
+  integrity sha512-fWRtMTPfAQAtrN0I4YuGZqVW1CSnqt0+vF0NYQl4e5qGhZ6AyUUmsEd3sFlSQX7M4JHJL7iozgUSpEffOA8opw==
+
+"@react-native-firebase/storage@19.3.0":
+  version "19.3.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-19.3.0.tgz#ecfc7072698fedce721be60678259c3ba7c202a4"
+  integrity sha512-ficwY+uUEDQaSlodpKLjFvF4l63EMvialF2EWpegHwPFDu8J6iJh/0pMaMZ8GijTVBfTt8QsDebC/lEhNyErLw==
 
 "@react-native-masked-view/masked-view@^0.3.1":
   version "0.3.1"

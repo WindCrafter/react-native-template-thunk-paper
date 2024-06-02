@@ -43,7 +43,7 @@ function SnackBarGlobalComponent(_: any, ref: React.ForwardedRef<ISnackBarGlobal
     }
 
     setSnackBarProps({
-      type: ESystemStatus.Info, duration: 5000, onDismiss: () => {
+      type: ESystemStatus.Info, duration: 3000, onDismiss: () => {
       }, theme, ...props, visible: true
     });
   }, []);

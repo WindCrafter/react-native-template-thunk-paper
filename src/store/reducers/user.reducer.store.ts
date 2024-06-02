@@ -11,12 +11,19 @@ export const initialState: InitialState = {
 export const user = createSlice({
   name: "user",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    setIsAuthenticatedThunk: (state: InitialState, action: {payload: boolean}) => {
+      state.isAuthenticated = action.payload;
+    },
+  },
   extraReducers(builder) {
 
   }
 });
 
 // Reducer
-export const {} = user.actions;
+export const {
+  setIsAuthenticatedThunk
+} = user.actions;
+
 export default user.reducer;
