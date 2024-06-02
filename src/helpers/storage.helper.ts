@@ -14,7 +14,7 @@ namespace StorageHelper{
   export function getBugOwnerId() {
     return storage.getString("bug.ownerid") || ""
   }
-  
+
   export async function setBugDevice() {
     if (__DEV__ || !(Config.LOG_USER_BUGS_TO_FIREBASE?.toLowerCase() === "true")) return;
 

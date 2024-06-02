@@ -5,7 +5,7 @@ import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 import reducer, { BLACK_LIST, RootReducer, WHITE_LIST } from "store/index";
 import { MMKV } from "react-native-mmkv";
 import logger from "redux-logger";
-import { customLogStoreHelper } from "helpers/redux.helper";
+import ReduxHelper from "helpers/redux.helper";
 import Config from "react-native-config";
 
 const storage = new MMKV();
@@ -47,7 +47,7 @@ const store = configureStore({
       return getDefaultMiddleware({
         immutableCheck: { warnAfter: 50 },
         serializableCheck: false
-      }).concat(logger).concat(customLogStoreHelper)
+      }).concat(logger).concat(ReduxHelper.customLogStoreHelper)
     }
 
     return getDefaultMiddleware({

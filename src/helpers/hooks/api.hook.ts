@@ -1,5 +1,7 @@
-import { useAppDispatch } from "configs/store.config";
+import {useAppDispatch} from "configs/store.config";
 import GlobalHelper from "helpers/globalHelper";
+import {ESystemStatus} from "constants/system/system.constant";
+import languages from "constants/system/languages";
 
 namespace IUseAPI {
   export interface ICallThunk {
@@ -8,6 +10,7 @@ namespace IUseAPI {
     messageSuccess?: string;
     actionSuccess?: Function;
     showLoading?: boolean;
+
     autoHideLoading?: boolean;
     messageFailed?: string;
     actionFailed?: Function;
@@ -40,9 +43,9 @@ export const useAPI = <T>() => {
         actionSuccess?.(res.payload.data);
       }
       if (messageSuccess) {
-        GlobalHelper.alertHelper({
-          type: "success",
-          message: messageSuccess
+        GlobalHelper.showSnackBar({
+          type: ESystemStatus.Success,
+          content: messageSuccess
         });
       }
       return;
@@ -50,9 +53,9 @@ export const useAPI = <T>() => {
 
     const message = Array.isArray(res.error?.message) ? res.error?.message?.[0] : (res.error?.message || languages.somethingWentWrong);
     if (messageFailed) {
-      GlobalPopupHelper.alertHelper({
-        type: "error",
-        message: messageFailed || message
+      GlobalHelper.showSnackBar({
+        type: ESystemStatus.Error,
+        content: messageFailed || message
       });
     }
     actionFailed?.(message);
@@ -71,35 +74,35 @@ export const useAPI = <T>() => {
                              }: TypedCallApi) => {
     try {
       if (showLoading) {
-        GlobalPopupHelper.showLoadingHelper();
+        GlobalHelper.showLoading();
       }
       const res = await functionService?.(params);
       if (hideLoading) {
-        GlobalPopupHelper.hideLoadingHelper();
+        GlobalHelper.hideLoading();
       }
       if (res) {
         if (actionSuccess) {
           actionSuccess?.(res);
         }
         if (messageSuccess) {
-          GlobalPopupHelper.alertHelper({
-            type: "success",
-            message: messageSuccess
+          GlobalHelper.showSnackBar({
+            type: ESystemStatus.Success,
+            content: messageSuccess
           });
         }
         return;
       }
       actionFailed?.("Network Error");
     } catch (error: any) {
-      GlobalPopupHelper.hideLoadingHelper();
+      GlobalHelper.hideLoading();
       const messages = error?.response?.data?.message;
       const message = Array.isArray(messages) ? messages?.[0] : (messages || languages.somethingWentWrong);
       if (showMessageFailed) {
         let messageContent = languages[message];
         console.log("Call api failed", message, params);
-        GlobalPopupHelper.alertHelper({
-          type: "error",
-          message: messageFailed || messageContent || message
+        GlobalHelper.showSnackBar({
+          type: ESystemStatus.Error,
+          content: messageFailed || messageContent || message
         });
       }
       actionFailed?.(message);
