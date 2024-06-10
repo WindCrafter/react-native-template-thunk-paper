@@ -1,5 +1,7 @@
 export default {
   hello: "Hello",
+  showMore: "Show more",
+  showLess: "Show less",
   home: {
     home: "Home"
   },
