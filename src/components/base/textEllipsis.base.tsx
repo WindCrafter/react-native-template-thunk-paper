@@ -89,7 +89,7 @@ export default function BTextEllipsis({
   return (
     <BText onTextLayout={onTextLayoutOverride}
            numberOfLines={isNeedReadMore && !isPropsChangeRef.current ? undefined : numberOfLines}
-           style={[{ width: "100%" }, style, { opacity: isDoneCalculateRef.current ? (StyleSheet.flatten(style || {})?.opacity || 1) : 0 }]}
+           style={[{ width: "100%" }, style, { opacity: isDoneCalculateRef.current ? StyleSheet.flatten(style || {})?.opacity : 0 }]}
            {...props} >
       {textRef.current}
       {

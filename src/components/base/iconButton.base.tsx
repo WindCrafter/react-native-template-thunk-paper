@@ -1,10 +1,10 @@
 import React, { useCallback, useRef } from "react";
-import { Button } from "react-native-paper";
+import { IconButton } from "react-native-paper";
 import { GestureResponderEvent } from "react-native";
 import FirebaseHelper from "helpers/firebase.helper";
 import FirebaseConstant from "constants/firebase.constant";
 
-interface IBButtonProps extends React.ComponentProps<typeof Button> {
+interface IBIconButtonProps extends React.ComponentProps<typeof IconButton> {
   eventKey?: string;
   logWithTime?: boolean;
   firstLogOnly?: boolean;
@@ -14,7 +14,7 @@ interface IBButtonProps extends React.ComponentProps<typeof Button> {
  * A custom button component that extends the functionality of the React Native Paper Button component.
  * It provides additional features such as event logging and tracking of whether the button has already been logged.
  *
- * @param {IBButtonProps} props - The props for the BButton component.
+ * @param {IBIconButtonProps} props - The props for the BButton component.
  * @param {Function} props.onPress - The function to be called when the button is pressed.
  * @param {Function} props.onLongPress - The function to be called when the button is long pressed.
  * @param {string} props.eventKey - The event key to be used for logging.
@@ -22,14 +22,14 @@ interface IBButtonProps extends React.ComponentProps<typeof Button> {
  * @param {boolean} props.firstLogOnly - Whether to only log the event once.
  * @returns {React.JSX.Element} The rendered BButton component.
  */
-export default function BButton({
-                                  onPress,
-                                  onLongPress,
-                                  eventKey,
-                                  logWithTime = true,
-                                  firstLogOnly = true,
-                                  ...props
-                                }: IBButtonProps): React.JSX.Element {
+export default function BIconButton({
+                                      onPress,
+                                      onLongPress,
+                                      eventKey,
+                                      logWithTime = true,
+                                      firstLogOnly = true,
+                                      ...props
+                                    }: IBIconButtonProps): React.JSX.Element {
 
   const isAlreadyLogged = useRef<boolean>(false);
 
@@ -49,6 +49,6 @@ export default function BButton({
     onLongPress?.(e);
   }, [onLongPress, eventKey, firstLogOnly]);
 
-  return <Button onPress={onPressButton} onLongPress={onLongPressButton} {...props} children={props.children} />;
+  return <IconButton onPress={onPressButton} onLongPress={onLongPressButton} {...props} />;
 }
 
