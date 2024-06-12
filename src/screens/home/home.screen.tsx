@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View, Switch } from "react-native";
 import BText from "components/base/text.base";
 import { FontSize, HS, MHS, VS } from "constants/system/ui/sizes.ui.constant";
 import { ITheme } from "constants/system/ui/theme.constant";
@@ -13,13 +13,13 @@ import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/botto
 import FirebaseHelper from "helpers/firebase.helper";
 import navigationHelper from "helpers/navigation.helper";
 import { NAVIGATION_LOGS_BUG_SCREEN } from "constants/system/navigation.constant";
-import BTextEllipsis from "components/base/textEllipsis.base";
+import SkeletonContainerComponent from "components/skeleton/skeletonContainer.component";
+import BTextEllipsis from "components/base/textEllipsis/textEllipsis.d";
 
 
 export default function HomeScreen() {
   const { styles } = useSystemTheme(createStyles);
   const bottomSheetRef = useRef<BottomSheet>(null);
-
 
   function showSnackBar() {
     GlobalHelper.showSnackBar({ content: "Hello" });
@@ -56,7 +56,6 @@ export default function HomeScreen() {
       </View>
 
 
-
       <View style={styles.componentView}>
         <BText variant={"headlineMedium"}>Multi text</BText>
         <Divider />
@@ -65,6 +64,23 @@ export default function HomeScreen() {
           style2={{ color: "green", fontWeight: "500", fontStyle: "italic" }}
           style3={{ color: "brown", fontSize: FontSize.H3, textDecorationLine: "line-through" }}
         >Hello |||Every||| One</BTextMulti>
+      </View>
+
+      <View style={styles.componentView}>
+        <BText variant={"headlineMedium"}>Skeleton</BText>
+        <Divider />
+        <SkeletonContainerComponent>
+          <View style={{width:100, height:100}} />
+        </SkeletonContainerComponent>
+        <SkeletonContainerComponent>
+          <View style={{width:100, height:100, borderRadius: 100}} />
+        </SkeletonContainerComponent>
+        <SkeletonContainerComponent>
+          <View style={{width:"100%", height:20, borderRadius: 6}} />
+        </SkeletonContainerComponent>
+        <SkeletonContainerComponent>
+          <View style={{width:"100%", height:20, borderRadius: 6}} />
+        </SkeletonContainerComponent>
       </View>
 
 

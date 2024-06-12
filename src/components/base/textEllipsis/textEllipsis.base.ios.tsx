@@ -1,12 +1,17 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { Text } from "react-native-paper";
-import { NativeSyntheticEvent, StyleProp, StyleSheet, TextLayoutEventData, TextStyle } from "react-native";
+import { NativeSyntheticEvent, StyleProp, StyleSheet, TextLayoutEventData, TextStyle, View } from "react-native";
 import BText from "components/base/text.base";
 import languages from "constants/system/languages";
+import { BStyle } from "constants/system/ui/styles.constant";
 
 interface IBTextProps extends React.ComponentProps<typeof Text> {
   numberOfLines: number;
   children: string;
+
+  /**
+   * Style for "Show more" or "Show less" text at the end of the string.
+   */
   styleReadMoreText?: StyleProp<TextStyle>;
 }
 
@@ -20,47 +25,46 @@ interface IBTextProps extends React.ComponentProps<typeof Text> {
  * @param props
  * @constructor
  */
-export default function BTextEllipsis({
-                                        numberOfLines,
-                                        onTextLayout,
-                                        children,
-                                        styleReadMoreText,
-                                        style,
-                                        ...props
-                                      }: IBTextProps): React.JSX.Element {
+export default function BTextEllipsisIOS({
+                                           numberOfLines,
+                                           children,
+                                           styleReadMoreText,
+                                           style,
+                                           ...props
+                                         }: IBTextProps): React.JSX.Element {
 
   const [isNeedReadMore, setIsNeedReadMore] = useState(false);
   const [_, setStateForReRender] = useState(false);
   const [isShowAll, setIsShowAll] = useState(false);
   const textRef = useRef(children);
   const shortTextRef = useRef(children);
-  const lengthNeedToCutRef = useRef(languages.showMore.length + 6);
+  const lengthNeedToCutRef = useRef(languages.showMore.length + 4);
   const isDoneCalculateRef = useRef(false);
   const isPropsChangeRef = useRef(false);
 
   useLayoutEffect(() => {
     isPropsChangeRef.current = true;
     textRef.current = children;
+    setStateForReRender(old => !old);
 
     return (() => {
       isDoneCalculateRef.current = false;
     });
   }, [children, style, styleReadMoreText, numberOfLines]);
 
+
   useLayoutEffect(() => {
-    lengthNeedToCutRef.current = languages.showMore.length + 6;
+    lengthNeedToCutRef.current = languages.showMore.length + 4;
   }, [languages.showMore]);
 
   const onTextLayoutOverride = useCallback((event: NativeSyntheticEvent<TextLayoutEventData>) => {
-    onTextLayout?.(event);
-
     if (isDoneCalculateRef.current) {
       return;
     }
 
     isDoneCalculateRef.current = true;
     isPropsChangeRef.current = false;
-    if (event.nativeEvent?.lines?.length > numberOfLines) {
+    if (event.nativeEvent?.lines?.length >= numberOfLines) {
       let shortText = "";
       for (let i = 0; i < numberOfLines; i++) {
         shortText = shortText.concat(event.nativeEvent?.lines[i].text);
@@ -74,7 +78,7 @@ export default function BTextEllipsis({
     }
 
     setStateForReRender(old => !old);
-  }, [onTextLayout, numberOfLines]);
+  }, [numberOfLines]);
 
   const switchShowStatus = useCallback(() => {
     if (isShowAll) {
@@ -87,18 +91,31 @@ export default function BTextEllipsis({
   }, [isShowAll, children]);
 
   return (
-    <BText onTextLayout={onTextLayoutOverride}
-           numberOfLines={isNeedReadMore && !isPropsChangeRef.current ? undefined : numberOfLines}
-           style={[{ width: "100%" }, style, { opacity: isDoneCalculateRef.current ? StyleSheet.flatten(style || {})?.opacity : 0 }]}
-           {...props} >
-      {textRef.current}
+    <View style={BStyle.fullWidth}>
+      <BText
+        // onTextLayout={onTextLayoutOverride}
+        numberOfLines={isNeedReadMore && !isPropsChangeRef.current ? undefined : numberOfLines}
+        style={[{ width: "100%" }, style, { opacity: isDoneCalculateRef.current ? StyleSheet.flatten(style || {})?.opacity : 0 }]}
+        {...props} >
+        {textRef.current}
+        {
+          isNeedReadMore &&
+          <BText onPress={switchShowStatus} style={styleReadMoreText}>
+            {isShowAll ? " " + languages.showLess : languages.showMore}
+          </BText>
+        }
+      </BText>
       {
-        isNeedReadMore &&
-        <BText onPress={switchShowStatus} style={styleReadMoreText}>
-          {isShowAll ? " " + languages.showLess : languages.showMore}
-        </BText>
+        (!isDoneCalculateRef.current) ?
+          <BText onTextLayout={onTextLayoutOverride}
+                 disabled
+                 style={[{ width: "100%" }, style, { position: "absolute", opacity: 0, zIndex: -1000 }]}
+                 {...props} children={children} />
+          :
+          null
       }
-    </BText>
+    </View>
+
   );
 }
 
