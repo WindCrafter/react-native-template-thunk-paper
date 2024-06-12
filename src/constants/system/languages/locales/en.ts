@@ -12,5 +12,8 @@ export default {
   },
   detailLogsBug:{
     detail:"Detail"
+  },
+  releaseLogs:{
+    logs:"Logs"
   }
 };

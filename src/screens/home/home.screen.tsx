@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { ScrollView, StyleSheet, View, Switch } from "react-native";
+import React, { useRef } from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
 import BText from "components/base/text.base";
 import { FontSize, HS, MHS, VS } from "constants/system/ui/sizes.ui.constant";
 import { ITheme } from "constants/system/ui/theme.constant";
@@ -12,7 +12,7 @@ import GlobalHelper from "helpers/globalHelper";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
 import FirebaseHelper from "helpers/firebase.helper";
 import navigationHelper from "helpers/navigation.helper";
-import { NAVIGATION_LOGS_BUG_SCREEN } from "constants/system/navigation.constant";
+import { NAVIGATION_LOGS_BUG_SCREEN, NAVIGATION_RELEASE_LOGS_SCREEN } from "constants/system/navigation.constant";
 import SkeletonContainerComponent from "components/skeleton/skeletonContainer.component";
 import BTextEllipsis from "components/base/textEllipsis/textEllipsis.base";
 
@@ -26,62 +26,65 @@ export default function HomeScreen() {
   }
 
   return (
-    <ScrollView style={{flex:1}} contentContainerStyle={styles.container}>
-      <View style={styles.componentView}>
-        <BText variant={"headlineMedium"}>Button</BText>
-        <Divider />
-        <BButton onPress={() => FirebaseHelper.logEventAnalytics({ event: "hello" })}>Button</BButton>
-        <BButton mode={"contained"} onPress={showSnackBar}>Show snackbar</BButton>
-        <BButton mode={"elevated"} onPress={() => bottomSheetRef.current?.expand()}>Show bottom sheet</BButton>
-        <BButton mode={"outlined"} onPress={() => navigationHelper.navigate(NAVIGATION_LOGS_BUG_SCREEN)}>Bugs
-          list</BButton>
-        <BButton mode={"contained-tonal"}
-                 onPress={() => FirebaseHelper.createLogBug("", "", "api", navigationHelper.getRouteName() || "")}>Button</BButton>
-      </View>
+    <View style={styles.container}>
+      <ScrollView style={styles.scrollViewStyle} contentContainerStyle={styles.contentContainerStyle}>
+        <View style={styles.componentView}>
+          <BText variant={"headlineMedium"}>Button</BText>
+          <Divider />
+          <BButton onPress={() => FirebaseHelper.logEventAnalytics({ event: "hello" })}>Button</BButton>
+          <BButton mode={"contained"} onPress={showSnackBar}>Show snackbar</BButton>
+          <BButton mode={"elevated"} onPress={() => bottomSheetRef.current?.expand()}>Show bottom sheet</BButton>
+          <BButton mode={"outlined"} onPress={() => navigationHelper.navigate(NAVIGATION_LOGS_BUG_SCREEN)}>Bugs list</BButton>
+          <BButton mode={"contained-tonal"} onPress={() => navigationHelper.navigate(NAVIGATION_RELEASE_LOGS_SCREEN)}>Release logs</BButton>
+        </View>
 
-      <View style={styles.componentView}>
-        <BText variant={"headlineMedium"}>TextInput</BText>
-        <Divider />
-        <BTextInput placeholder={"Textinput"} />
-        <BTextInput mode={"outlined"} placeholder={"Textinput"} />
-        <BTextInput mode={"outlined"} label={"Hello"} />
-      </View>
+        <View style={styles.componentView}>
+          <BText variant={"headlineMedium"}>TextInput</BText>
+          <Divider />
+          <BTextInput placeholder={"Textinput"} />
+          <BTextInput mode={"outlined"} placeholder={"Textinput"} />
+          <BTextInput mode={"outlined"} label={"Hello"} />
+        </View>
 
-      <View style={styles.componentView}>
-        <BText variant={"headlineMedium"}>TextEllipsis</BText>
-        <Divider />
-        <BTextEllipsis numberOfLines={3} styleReadMoreText={{color: "red"}} style={{width: '100%', fontSize: 16}}>
-          The string against which to match the regular expression. All values are coerced to strings, so omitting it or passing undefined causes test() to search for the string "undefined", which is rarely what you want.
-        </BTextEllipsis>
-      </View>
+        <View style={styles.componentView}>
+          <BText variant={"headlineMedium"}>TextEllipsis</BText>
+          <Divider />
+          <BTextEllipsis numberOfLines={3} styleReadMoreText={{ color: "red" }} style={{ width: "100%", fontSize: 16 }}>
+            The string against which to match the regular expression. All values are coerced to strings, so omitting it or
+            passing undefined causes test() to search for the string "undefined", which is rarely what you want.
+          </BTextEllipsis>
+        </View>
 
 
-      <View style={styles.componentView}>
-        <BText variant={"headlineMedium"}>Multi text</BText>
-        <Divider />
-        <BTextMulti
-          style1={{ color: "red", fontWeight: "bold", fontSize: FontSize.H2 }}
-          style2={{ color: "green", fontWeight: "500", fontStyle: "italic" }}
-          style3={{ color: "brown", fontSize: FontSize.H3, textDecorationLine: "line-through" }}
-        >Hello |||Every||| One</BTextMulti>
-      </View>
+        <View style={styles.componentView}>
+          <BText variant={"headlineMedium"}>Multi text</BText>
+          <Divider />
+          <BTextMulti
+            style1={{ color: "red", fontWeight: "bold", fontSize: FontSize.H2 }}
+            style2={{ color: "green", fontWeight: "500", fontStyle: "italic" }}
+            style3={{ color: "brown", fontSize: FontSize.H3, textDecorationLine: "line-through" }}
+          >Hello |||Every||| One</BTextMulti>
+        </View>
 
-      <View style={styles.componentView}>
-        <BText variant={"headlineMedium"}>Skeleton</BText>
-        <Divider />
-        <SkeletonContainerComponent>
-          <View style={{width:100, height:100}} />
-        </SkeletonContainerComponent>
-        <SkeletonContainerComponent>
-          <View style={{width:100, height:100, borderRadius: 100}} />
-        </SkeletonContainerComponent>
-        <SkeletonContainerComponent>
-          <View style={{width:"100%", height:20, borderRadius: 6}} />
-        </SkeletonContainerComponent>
-        <SkeletonContainerComponent>
-          <View style={{width:"100%", height:20, borderRadius: 6}} />
-        </SkeletonContainerComponent>
-      </View>
+        <View style={styles.componentView}>
+          <BText variant={"headlineMedium"}>Skeleton</BText>
+          <Divider />
+          <SkeletonContainerComponent>
+            <View style={{ width: 100, height: 100 }} />
+          </SkeletonContainerComponent>
+          <SkeletonContainerComponent>
+            <View style={{ width: 100, height: 100, borderRadius: 100 }} />
+          </SkeletonContainerComponent>
+          <SkeletonContainerComponent>
+            <View style={{ width: "100%", height: 20, borderRadius: 6 }} />
+          </SkeletonContainerComponent>
+          <SkeletonContainerComponent>
+            <View style={{ width: "100%", height: 20, borderRadius: 6 }} />
+          </SkeletonContainerComponent>
+        </View>
+      </ScrollView>
+
+
 
 
       <BottomSheet
@@ -94,8 +97,7 @@ export default function HomeScreen() {
           <BText variant={"headlineLarge"}>Hello guys</BText>
         </BottomSheetView>
       </BottomSheet>
-    </ScrollView>
-
+    </View>
   );
 };
 
@@ -103,9 +105,15 @@ export default function HomeScreen() {
 const createStyles = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
+      flex:1
+    },
+    contentContainerStyle: {
       justifyContent: "center",
       alignItems: "center",
       gap: VS._32
+    },
+    scrollViewStyle:{
+      flex:1,
     },
     componentView: {
       width: "100%",

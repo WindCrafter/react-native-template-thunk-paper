@@ -2,7 +2,7 @@ import {MMKV} from "react-native-mmkv";
 
 import axios, {AxiosResponse} from "axios";
 import {APP_URL} from "configs/index";
-import {globalApp} from "../helpers/railway.helper";
+import {globalApp} from "helpers/railway.helper";
 import dayjs from "dayjs";
 import AxiosHelper from "helpers/axios.helper";
 
