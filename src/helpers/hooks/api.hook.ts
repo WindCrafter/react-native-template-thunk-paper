@@ -1,9 +1,10 @@
+import React, { useEffect, useRef } from "react";
 import {useAppDispatch} from "configs/store.config";
 import GlobalHelper from "helpers/globalHelper";
 import {ESystemStatus} from "constants/system/system.constant";
 import languages from "constants/system/languages";
 
-namespace IUseAPI {
+namespace IAPIHook {
   export interface ICallThunk {
     dispatchFunction?: Function;
     params?: any;
@@ -15,6 +16,19 @@ namespace IUseAPI {
     messageFailed?: string;
     actionFailed?: Function;
     functionService?: Function;
+  }
+
+  export interface ICallApi {
+    dispatchFunction?: Function
+    params: any
+    messageSuccess?: string
+    showMessageFailed?: boolean
+    actionSuccess?: Function
+    showLoading?: boolean
+    hideLoading?: boolean
+    messageFailed?: string
+    actionFailed?: Function
+    functionService?: Function
   }
 }
 
@@ -30,7 +44,7 @@ export const useAPI = <T>() => {
                              autoHideLoading = false,
                              actionSuccess,
                              actionFailed
-                           }: IUseAPI.ICallThunk) => {
+                           }: IAPIHook.ICallThunk) => {
     if (showLoading) {
       GlobalHelper.showLoading(autoHideLoading);
     }
@@ -71,7 +85,7 @@ export const useAPI = <T>() => {
                                hideLoading = true,
                                actionFailed,
                                messageFailed = ""
-                             }: TypedCallApi) => {
+                             }: IAPIHook.ICallApi) => {
     try {
       if (showLoading) {
         GlobalHelper.showLoading();
@@ -98,6 +112,7 @@ export const useAPI = <T>() => {
       const messages = error?.response?.data?.message;
       const message = Array.isArray(messages) ? messages?.[0] : (messages || languages.somethingWentWrong);
       if (showMessageFailed) {
+        // @ts-ignore
         let messageContent = languages[message];
         console.log("Call api failed", message, params);
         GlobalHelper.showSnackBar({
@@ -111,3 +126,34 @@ export const useAPI = <T>() => {
 
   return { callThunk, callService };
 };
+
+/**
+ * Custom hook to execute an asynchronous function and handle the results when the component is mounted.
+ * This hook prevents memory leaks by canceling actions if the component is unmounted before the async operation completes.
+ *
+ * @param asyncFn - The asynchronous function to be executed.
+ * @param arrayCallbackFunction - An array of callback functions to handle the results of the asynchronous function.
+ */
+export function useAsync<T>(asyncFn: () => Promise<T[]>, arrayCallbackFunction: ((item: T) => void)[]) {
+  useEffect(() => {
+    let isActive = true;
+
+    try {
+      asyncFn().then((data: T[]) => {
+        if (isActive) {
+          data.forEach((itemResult, index) => {
+            if (itemResult && typeof arrayCallbackFunction[index] === "function")
+              arrayCallbackFunction[index](itemResult);
+          });
+        }
+      })
+        .catch((error) => console.error(error));
+    } catch (error) {
+      console.error(error);
+    }
+
+    return () => {
+      isActive = false;
+    };
+  }, [asyncFn]);
+}
