@@ -15,9 +15,6 @@ import navigationHelper from "helpers/navigation.helper";
 import { NAVIGATION_LOGS_BUG_SCREEN, NAVIGATION_RELEASE_LOGS_SCREEN } from "constants/system/navigation.constant";
 import SkeletonContainerComponent from "components/skeleton/skeletonContainer.component";
 import BTextEllipsis from "components/base/textEllipsis/textEllipsis.base";
-import { StringHelper } from "helpers/string.helper";
-import NumberHelper from "helpers/number.helper";
-import ObjectHelper from "helpers/object.helper";
 
 
 export default function HomeScreen() {
@@ -31,15 +28,16 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollViewStyle} contentContainerStyle={styles.contentContainerStyle}>
-        <BText>{ObjectHelper.getValueFromPath({ a: { b: [{ c: 123 }] } }, 'a.b[0].c')}</BText>
         <View style={styles.componentView}>
           <BText variant={"headlineMedium"}>Button</BText>
           <Divider />
           <BButton onPress={() => FirebaseHelper.logEventAnalytics({ event: "hello" })}>Button</BButton>
           <BButton mode={"contained"} onPress={showSnackBar}>Show snackbar</BButton>
           <BButton mode={"elevated"} onPress={() => bottomSheetRef.current?.expand()}>Show bottom sheet</BButton>
-          <BButton mode={"outlined"} onPress={() => navigationHelper.navigate(NAVIGATION_LOGS_BUG_SCREEN)}>Bugs list</BButton>
-          <BButton mode={"contained-tonal"} onPress={() => navigationHelper.navigate(NAVIGATION_RELEASE_LOGS_SCREEN)}>Release logs</BButton>
+          <BButton mode={"outlined"} onPress={() => navigationHelper.navigate(NAVIGATION_LOGS_BUG_SCREEN)}>Bugs
+            list</BButton>
+          <BButton mode={"contained-tonal"} onPress={() => navigationHelper.navigate(NAVIGATION_RELEASE_LOGS_SCREEN)}>Release
+            logs</BButton>
         </View>
 
         <View style={styles.componentView}>
@@ -54,7 +52,8 @@ export default function HomeScreen() {
           <BText variant={"headlineMedium"}>TextEllipsis</BText>
           <Divider />
           <BTextEllipsis numberOfLines={3} styleReadMoreText={{ color: "red" }} style={{ width: "100%", fontSize: 16 }}>
-            The string against which to match the regular expression. All values are coerced to strings, so omitting it or
+            The string against which to match the regular expression. All values are coerced to strings, so omitting it
+            or
             passing undefined causes test() to search for the string "undefined", which is rarely what you want.
           </BTextEllipsis>
         </View>
@@ -95,8 +94,6 @@ export default function HomeScreen() {
       </ScrollView>
 
 
-
-
       <BottomSheet
         ref={bottomSheetRef}
         enablePanDownToClose
@@ -115,7 +112,7 @@ export default function HomeScreen() {
 const createStyles = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
-      flex:1
+      flex: 1
     },
     contentContainerStyle: {
       justifyContent: "center",
@@ -123,8 +120,8 @@ const createStyles = (theme: ITheme) => {
       gap: VS._32,
       paddingBottom: VS._20
     },
-    scrollViewStyle:{
-      flex:1,
+    scrollViewStyle: {
+      flex: 1
     },
     componentView: {
       width: "100%",

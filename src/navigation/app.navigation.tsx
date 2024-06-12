@@ -20,7 +20,7 @@ import GlobalHelper from "helpers/globalHelper";
 import SnackBarGlobalComponent from "components/global/snackbar.global.component";
 import {PaperProvider} from "react-native-paper";
 import {THEME} from "constants/system/ui/theme.constant";
-import {ENVIRONMENT, setUrlEnv} from "configs";
+import {EEnvironment, setUrlEnv} from "configs";
 import {VS} from "constants/system/ui/sizes.ui.constant";
 import NavigationHelper from "helpers/navigation.helper";
 import ViewShot, {CaptureOptions} from "react-native-view-shot";
@@ -74,10 +74,10 @@ export default function AppNavigation() {
     }, []);
 
     useEffect(() => {
-        const env = storage.getString("env") || (__DEV__ ? ENVIRONMENT.DEVELOP : ENVIRONMENT.PRODUCT);
+        const env = storage.getString("env") || (__DEV__ ? EEnvironment.DEVELOP : EEnvironment.PRODUCT);
 
-        setUrlEnv(env === ENVIRONMENT.PRODUCT);
-        setIsProduct(env === ENVIRONMENT.PRODUCT);
+        setUrlEnv(env === EEnvironment.PRODUCT);
+        setIsProduct(env === EEnvironment.PRODUCT);
 
         StorageHelper.setBugDevice();
 

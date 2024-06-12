@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice, isFulfilled} from "@reduxjs/toolkit";
 import axios from "axios";
-import {APP_URL} from "configs";
+import {appUrlConfig} from "configs";
 import ReduxHelper from "helpers/redux.helper";
 import StorageHelper from "helpers/storage.helper";
 
@@ -15,7 +15,7 @@ export const initialState: InitialState = {
 export const loginWithPasswordThunk = createAsyncThunk(
     "user/loginWithPasswordThunk",
     async ({email, password}: { email: string, password: string }) => {
-        return await axios.post<any>(`${APP_URL.APP_MAIN_URL}/user/login`)
+        return await axios.post<any>(`${appUrlConfig.APP_MAIN_URL}/user/login`)
     },
     {serializeError: ReduxHelper.serializeAxiosError}
 );

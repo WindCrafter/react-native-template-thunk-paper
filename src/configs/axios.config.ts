@@ -1,17 +1,17 @@
 import {MMKV} from "react-native-mmkv";
 
 import axios, {AxiosResponse} from "axios";
-import {APP_URL} from "configs/index";
 import {globalApp} from "helpers/railway.helper";
 import dayjs from "dayjs";
 import AxiosHelper from "helpers/axios.helper";
+import { appUrlConfig } from "configs/index";
 
 const storage = new MMKV();
 
 
-const TIMEOUT = Number(APP_URL.APP_API_REQUEST_TIMEOUT);
+const TIMEOUT = Number(appUrlConfig.APP_API_REQUEST_TIMEOUT);
 axios.defaults.timeout = TIMEOUT;
-axios.defaults.baseURL = APP_URL.APP_MAIN_URL;
+axios.defaults.baseURL = appUrlConfig.APP_MAIN_URL;
 
 let Reset = "\x1b[0m";
 let Bright = "\x1b[1m";
@@ -131,7 +131,7 @@ export default function setupAxiosInterceptors(onUnauthenticated: (status: numbe
          */
         const status = err.status || (err.response ? err?.response?.status : 0);
         const requestUrl = err?.request?._url || "";
-        if ((status === 401 || status === 403) && requestUrl.toLowerCase().includes(APP_URL.APP_MAIN_URL?.toLowerCase())) {
+        if ((status === 401 || status === 403) && requestUrl.toLowerCase().includes(appUrlConfig.APP_MAIN_URL?.toLowerCase())) {
             onUnauthenticated(status);
         }
 
