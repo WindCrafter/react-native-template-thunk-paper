@@ -63,7 +63,7 @@ namespace StorageHelper{
 
   export function setBugLog(data: string) {
     if (__DEV__ || !(Config.LOG_USER_BUGS_TO_FIREBASE?.toLowerCase() === "true")) return;
-    storage.set("bug.logs", StringHelper.truncateStringLogBugs((storage.getString("bug.logs") || "") + data, 20000))
+    storage.set("bug.logs", StringHelper.truncateStringForLogBugs((storage.getString("bug.logs") || "") + data, 20000))
   }
 
   export function clearBugLog() {

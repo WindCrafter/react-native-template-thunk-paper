@@ -1,9 +1,11 @@
-import { getTypeOfAttributesHelper } from "helpers/object.helper";
 import StorageHelper from "helpers/storage.helper";
 import FirebaseHelper from "helpers/firebase.helper";
 import NavigationHelper from "helpers/navigation.helper";
+import ObjectHelper from "helpers/object.helper";
 
 namespace AxiosHelper{
+
+  const getTypeOfAttributes = ObjectHelper.getTypeOfAttributes;
 
   /**
    * @param errorData
@@ -82,9 +84,9 @@ namespace AxiosHelper{
       endpoint: response?.config?.url,
       hasAuth: !!response?.config?.headers?.["X-Authorization"],
       type: response?.config?.method,
-      data: getTypeOfAttributesHelper(response?.config?.data),
+      data: getTypeOfAttributes(response?.config?.data),
       responseCode: isError ? response.status || (response.response ? response?.response?.status : 0) : response?.status,
-      typeOfResponse: getTypeOfAttributesHelper(response?.data)
+      typeOfResponse: getTypeOfAttributes(response?.data)
     };
 
     if (isError) {

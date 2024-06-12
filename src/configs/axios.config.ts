@@ -20,7 +20,11 @@ let BgGreen = "\x1b[42m";
 let BgBlue = "\x1b[44m";
 let BgMagenta = "\x1b[45m";
 
-
+/**
+ * setupAxiosInterceptors
+ * Configures Axios interceptors for handling requests and responses.
+ * @param {Function} onUnauthenticated - Callback function for unauthenticated requests.
+ */
 export default function setupAxiosInterceptors(onUnauthenticated: (status: number) => void) {
 
     /**
@@ -29,9 +33,13 @@ export default function setupAxiosInterceptors(onUnauthenticated: (status: numbe
      */
     const onRequestSuccess = async (axios_config: any) => {
         axios_config.headers["X-Authorization"] = storage.getString("session");
+
+        // Append cache buster to URL
         const cacheBuster = Math.round(Math.random() * 1000000);
         axios_config.url = axios_config.url + (axios_config?.url?.includes("cacheBuster=") ? "" : (axios_config.url?.includes("?") ? "&" : "?") + `cacheBuster=${cacheBuster}`);
         axios_config.timeout = TIMEOUT;
+
+        // Log request details
         let Method = String(axios_config.method).toUpperCase();
         if (__DEV__) {
             /**
@@ -41,8 +49,9 @@ export default function setupAxiosInterceptors(onUnauthenticated: (status: numbe
             console.log(Bright + BgBlue + ` ${Method} ` + Reset, FgGreen + axios_config.url + Reset);
             console.log(Bright + BgMagenta + ` BODY ` + Reset, FgGreen + JSON.stringify(axios_config.body, null, 4) + Reset);
             console.log(Bright + BgGreen + ` AUTH ` + Reset, FgGreen + axios_config.headers["X-Authorization"] + Reset);
-            console.log(Bright + Bright + ` Channel ` + Reset, FgGreen + axios_config.headers["X-Channel"] + Reset);
         }
+
+        // Emit custom log event
         if (globalApp.customLog && globalApp.customLog.enableLog) {
             globalApp.customLog.emitEvent({
                 type: "call_api",
@@ -51,7 +60,6 @@ export default function setupAxiosInterceptors(onUnauthenticated: (status: numbe
                     url: axios_config.url,
                     data: axios_config.body,
                     token: axios_config.headers["X-Authorization"],
-                    config: axios_config.headers["X-Channel"]
                 }
             });
         }
@@ -72,12 +80,14 @@ export default function setupAxiosInterceptors(onUnauthenticated: (status: numbe
             storage.set("session", session);
         }
 
+        // Log response details
         let Method = String(response.config.method).toUpperCase();
         if (__DEV__) {
             console.log(Bright + BgBlue + ` ${Method} ` + Reset, FgGreen + response.config.url + Reset);
             console.log("Response Success", response);
         }
 
+        // Emit custom log event
         if (globalApp.customLog && globalApp.customLog.enableLog) {
             globalApp.customLog.emitEvent({
                 type: "call_api_response",
@@ -100,10 +110,10 @@ export default function setupAxiosInterceptors(onUnauthenticated: (status: numbe
         // const session = err?.response?.headers['x-authorization'];
         // if (session) await AsyncStorage.setItem('session', session);
 
-        const status = err.status || (err.response ? err?.response?.status : 0);
 
-        let Method = String(err.config.method).toUpperCase();
+        // Emit custom log event
         if (globalApp.customLog && globalApp.customLog.enableLog) {
+            let Method = String(err.config.method).toUpperCase();
             globalApp.customLog.emitEvent({
                 type: "call_api",
                 method: Method,
@@ -115,9 +125,11 @@ export default function setupAxiosInterceptors(onUnauthenticated: (status: numbe
             });
         }
 
+
         /**
          * 401 or 403: not auth or permission
          */
+        const status = err.status || (err.response ? err?.response?.status : 0);
         const requestUrl = err?.request?._url || "";
         if ((status === 401 || status === 403) && requestUrl.toLowerCase().includes(APP_URL.APP_MAIN_URL?.toLowerCase())) {
             onUnauthenticated(status);

@@ -15,6 +15,9 @@ import navigationHelper from "helpers/navigation.helper";
 import { NAVIGATION_LOGS_BUG_SCREEN, NAVIGATION_RELEASE_LOGS_SCREEN } from "constants/system/navigation.constant";
 import SkeletonContainerComponent from "components/skeleton/skeletonContainer.component";
 import BTextEllipsis from "components/base/textEllipsis/textEllipsis.base";
+import { StringHelper } from "helpers/string.helper";
+import NumberHelper from "helpers/number.helper";
+import ObjectHelper from "helpers/object.helper";
 
 
 export default function HomeScreen() {
@@ -28,6 +31,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollViewStyle} contentContainerStyle={styles.contentContainerStyle}>
+        <BText>{ObjectHelper.getValueFromPath({ a: { b: [{ c: 123 }] } }, 'a.b[0].c')}</BText>
         <View style={styles.componentView}>
           <BText variant={"headlineMedium"}>Button</BText>
           <Divider />
@@ -69,12 +73,18 @@ export default function HomeScreen() {
         <View style={styles.componentView}>
           <BText variant={"headlineMedium"}>Skeleton</BText>
           <Divider />
+
+          {/*square*/}
           <SkeletonContainerComponent>
             <View style={{ width: 100, height: 100 }} />
           </SkeletonContainerComponent>
+
+          {/*circle*/}
           <SkeletonContainerComponent>
             <View style={{ width: 100, height: 100, borderRadius: 100 }} />
           </SkeletonContainerComponent>
+
+          {/*line text*/}
           <SkeletonContainerComponent>
             <View style={{ width: "100%", height: 20, borderRadius: 6 }} />
           </SkeletonContainerComponent>
@@ -110,7 +120,8 @@ const createStyles = (theme: ITheme) => {
     contentContainerStyle: {
       justifyContent: "center",
       alignItems: "center",
-      gap: VS._32
+      gap: VS._32,
+      paddingBottom: VS._20
     },
     scrollViewStyle:{
       flex:1,

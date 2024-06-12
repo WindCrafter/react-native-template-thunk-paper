@@ -1,4 +1,9 @@
-import { hs, mhs, mvs, vs } from "helpers/system.helper";
+import SystemHelper from "helpers/system.helper";
+
+const mhs = SystemHelper.mhs;
+const hs = SystemHelper.hs;
+const vs = SystemHelper.vs;
+const mvs = SystemHelper.mvs;
 
 
 /**

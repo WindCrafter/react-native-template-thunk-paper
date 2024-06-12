@@ -1,4 +1,6 @@
-import {moderateHorizontalScale} from "helpers/system.helper";
+import SystemHelper from "helpers/system.helper";
+
+const moderateHorizontalScale = SystemHelper.moderateHorizontalScale
 
 interface Shadow {
   shadowColor: string,

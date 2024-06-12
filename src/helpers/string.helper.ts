@@ -1,252 +1,206 @@
 export namespace StringHelper {
 
-    export const removeVietnameseTones = (str: string) => {
-        if (!str) {
-            return ""
+    /**
+     * This function normalizes a Vietnamese string by removing accents and special characters.
+     * It replaces Vietnamese characters with their closest English equivalents, removes combining accents,
+     * eliminates extra spaces, and removes punctuation and special characters.
+     *
+     * @param {string} input - The Vietnamese string to be normalized.
+     * @returns {string} - The normalized string with Vietnamese tones and special characters removed.
+     *
+     * Example:
+     * normalizeVietnameseString('Tiếng Việt có dấu')
+     * // Returns: 'Tieng Viet co dau'
+     */
+    export const normalizeVietnameseString = (input: string): string => {
+        if (!input) {
+            return "";
         }
-        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-        str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-        str = str.replace(/đ/g, "d");
-        str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
-        str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
-        str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
-        str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
-        str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
-        str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
-        str = str.replace(/Đ/g, "D");
-        // Some system encode vietnamese combining accent as individual utf-8 characters
-        // Một vài bộ encode coi các dấu mũ, dấu chữ như một kí tự riêng biệt nên thêm hai dòng này
-        str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // ̀ ́ ̃ ̉ ̣  huyền, sắc, ngã, hỏi, nặng
-        str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // ˆ ̆ ̛  Â, Ê, Ă, Ơ, Ư
-        // Remove extra spaces
-        // Bỏ các khoảng trắng liền nhau
-        str = str.replace(/ + /g, " ");
-        str = str.trim();
-        // Remove punctuations
-        // Bỏ dấu câu, kí tự đặc biệt
-        str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, " ");
-        return str;
+
+        const vietnameseToEnglishMap: { [key: string]: string } = {
+            "àáạảãâầấậẩẫăằắặẳẵ": "a",
+            "èéẹẻẽêềếệểễ": "e",
+            "ìíịỉĩ": "i",
+            "òóọỏõôồốộổỗơờớợởỡ": "o",
+            "ùúụủũưừứựửữ": "u",
+            "ỳýỵỷỹ": "y",
+            "đ": "d",
+            "ÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴ": "A",
+            "ÈÉẸẺẼÊỀẾỆỂỄ": "E",
+            "ÌÍỊỈĨ": "I",
+            "ÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠ": "O",
+            "ÙÚỤỦŨƯỪỨỰỬỮ": "U",
+            "ỲÝỴỶỸ": "Y",
+            "Đ": "D"
+        };
+
+        // Replace Vietnamese characters with corresponding English characters
+        for (const [vietChars, engChar] of Object.entries(vietnameseToEnglishMap)) {
+            const regex = new RegExp(`[${vietChars}]`, 'g');
+            input = input.replace(regex, engChar);
+        }
+
+        // Remove Vietnamese combining accents
+        input = input.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // ̀ ́ ̃ ̉ ̣
+        input = input.replace(/\u02C6|\u0306|\u031B/g, ""); // ˆ ̆ ̛
+
+        // Replace multiple spaces with a single space
+        input = input.replace(/ +/g, " ").trim();
+
+        // Remove punctuation and special characters
+        input = input.replace(/[!@%^*()+=<>?/,.:;"&#[\]~$_`{}|\\\-]/g, " ");
+
+        return input;
     }
 
-    export const parseJSON = (str?: string) => {
-        if (!str) {
-            return {}
-        }
-        try {
-            const res = JSON.parse(str)
-            return res
-        } catch (error) {
-            return {}
-        }
-    }
 
-    export function opacity(color: string, opacity: number): string {
-        // coerce values so ti is between 0 and 1.
-        const _opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
-        return color + _opacity.toString(16).toUpperCase();
-    }
-
-    export function formatBytes(bytes, decimals = 2) {
-        if (!+bytes) return '0 Bytes'
-
-        const k = 1024
-        const dm = decimals < 0 ? 0 : decimals
-        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-
-        const i = Math.floor(Math.log(bytes) / Math.log(k))
-
-        return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+    /**
+     * This function adds an opacity level to a given color in hexadecimal format.
+     * The opacity value is clamped between 0 and 1 and then converted to a two-digit
+     * hexadecimal representation, which is appended to the color string.
+     *
+     * @param {string} color - The hex color code (e.g., "#RRGGBB").
+     * @param {number} opacity - The opacity level, a number between 0 and 1.
+     * @returns {string} - The color with the opacity level appended as a hex value (e.g., "#RRGGBBAA").
+     *
+     * Example:
+     * addOpacityToHexColor("#FF5733", 0.5)
+     * // Returns: "#FF573380"
+     */
+    export function addOpacityToHexColor(color: string, opacity: number): string {
+        // Ensure opacity is between 0 and 1, then convert to a hex value (00 to FF)
+        const clampedOpacity = Math.round(Math.min(Math.max(opacity, 0), 1) * 255);
+        const hexOpacity = clampedOpacity.toString(16).toUpperCase().padStart(2, '0');
+        return color + hexOpacity;
     }
 
     /**
-     * Return true, if @param n is valid number
+     * Converts a given number of bytes into a human-readable string with the appropriate unit.
+     * It handles conversion from bytes to larger units (KB, MB, GB, etc.) and formats the result
+     * with a specified number of decimal places.
      *
-     * @param n is number
+     * @param {number} bytes - The number of bytes to be converted.
+     * @param {number} decimals - The number of decimal places to include in the formatted result (default is 2).
+     * @returns {string} - A formatted string representing the size in a larger unit (e.g., "1.23 KB").
+     *
+     * Example:
+     * formatBytes(1024)
+     * // Returns: '1 KB'
+     * formatBytes(1234, 3)
+     * // Returns: '1.205 KB'
      */
-    export function isNonEmptyNumber(n: number | undefined | null) {
-        if (n == undefined || n == null) {
-            return false;
-        }
-        return true;
+    export function formatByteSize(bytes: number, decimals = 2): string {
+        // Check if bytes is not a number or is equal to 0
+        if (isNaN(bytes) || bytes === 0) return '0 Bytes';
+
+        // Constants for the conversion factor and number of decimal places
+        const KILOBYTE = 1024;
+        const decimalPlaces = decimals < 0 ? 0 : decimals;
+        const units = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+        // Calculate the unit index
+        const unitIndex = Math.floor(Math.log(bytes) / Math.log(KILOBYTE));
+
+        // Convert and format the result
+        const convertedValue = (bytes / Math.pow(KILOBYTE, unitIndex)).toFixed(decimalPlaces);
+
+        // Return the formatted result
+        return `${parseFloat(convertedValue)} ${units[unitIndex]}`;
+    }
+
+
+    /**
+     * Checks if a string is not a valid number string.
+     *
+     * @param {string} value - The string to be checked.
+     * @returns {boolean} - True if the string is not a valid number string, false otherwise.
+     *
+     * Example:
+     * isNotNumberString('123') // Returns: false
+     * isNotNumberString('abc') // Returns: true
+     */
+    export const isInvalidNumberString = (value: string): boolean => {
+        // Check if the trimmed value is not a number or if it does not match the original value
+        return isNaN(parseInt(value.trim())) || value.trim() !== `${parseInt(value.trim())}`;
     }
 
     /**
-     * Return true, if @param s is valid string
+     * Truncates a string to a specified maximum length while preserving data integrity.
+     * If the length of the input string is less than or equal to the maximum length,
+     * the original string is returned. Otherwise, the string is truncated by removing
+     * values from the beginning until its length is within the limit.
      *
-     *  @param s is string
+     * @param {string} inputString - The input string to be truncated.
+     * @param {number} maxLength - The maximum length allowed for the string.
+     * @returns {string} - The truncated string.
+     *
+     * Example:
+     * truncateString('Lorem ipsum dolor sit amet', 10)
+     * // Returns: 'dolor sit amet'
      */
-    export function isNonEmptyString(s: string | undefined | null) {
-        if (s == undefined || s == null || s == '') {
-            return false;
-        }
-        return true;
-    }
-
-    export const isNullOrEmpty = (value: any) => {
-        return !(typeof (value) !== 'undefined' || value != null);
-    };
-
-// check null or Undefinded
-    export const isNullOrUndefined = (data: any) => {
-        return (data == null || data === undefined);
-    };
-
-    export const convertNumber = (n, convertB = true, convertM = true, convertK = true) => {
-        const number = isNaN(Number(n)) ? 0 : Number(n)
-        if (number >= 1000000000 && convertB) {
-            if (number % 1000000000 === 0) {
-                return `${(number / 1000000000)}B`
-            }
-            return `${(number / 1000000000).toFixed(1)}B`
-        }
-        if (number >= 1000000 && convertM) {
-            if (number % 1000000 === 0) {
-                return `${(number / 1000000)}M`
-            }
-            return `${(number / 1000000).toFixed(1)}M`
-        }
-        if (number >= 1000 && convertK) {
-            if (number % 1000 === 0) {
-                return `${(number / 1000)}k`
-            }
-            return `${(number / 1000).toFixed(1)}k`
-        }
-        return `${Math.max(number, 0)}`
-    }
-
-
-    export const isNotNumberString = (value: string) => {
-        return isNaN(parseInt(value.trim())) || value.trim() !== `${parseInt(value.trim())}`
-    }
-
-    export function getValueFromPath(obj, path) {
-        // Chia chuỗi thành mảng keys
-        const keys = path.split('.').map(key => {
-            // Nếu key chứa dấu "[" thì loại bỏ nó để lấy chỉ số
-            const matches = key.match(/(.+?)\[(\d+)\]/);
-            if (matches) {
-                return {
-                    key: matches[1],
-                    index: parseInt(matches[2])
-                };
-            } else {
-                return {key};
-            }
-        });
-
-        // Truy cập giá trị trong object
-        let value = obj;
-        for (const keyInfo of keys) {
-            if (value && value?.hasOwnProperty(keyInfo?.key)) {
-                if (keyInfo.hasOwnProperty('index')) {
-                    value = value[keyInfo.key][keyInfo?.index];
-                } else {
-                    value = value[keyInfo.key];
-                }
-            } else {
-                // Nếu key không tồn tại trong object, trả về giá trị mặc định hoặc null
-                return null;
-            }
-        }
-
-        return value;
-    }
-
-    export function setNestedValue(obj, path, value) {
-        const pathArray = path.split('.'); // Chuyển đường dẫn thành một mảng các phần tử
-        let currentObj = obj;
-
-        // Duyệt qua từng phần tử trong đường dẫn
-        for (let i = 0; i < pathArray.length - 1; i++) {
-            const key = pathArray[i];
-            if (!currentObj[key]) {
-                currentObj[key] = {}; // Tạo một đối tượng nếu nó không tồn tại
-            }
-            currentObj = currentObj[key]; // Di chuyển đến đối tượng con
-        }
-
-        // Gán giá trị cuối cùng trong đường dẫn
-        currentObj[pathArray[pathArray.length - 1]] = value;
-    }
-
-    export function toHHMMSS(secs: number) {
-        let hours = Math.floor(secs / 3600)
-        let minutes = Math.floor(secs / 60) % 60
-        let seconds = secs % 60
-
-        return [hours, minutes, seconds]
-            .map(v => v < 10 ? "0" + v : v)
-            // .filter((v,i) => v !== "00" || i > 0)
-            .join(":")
-    }
-
-    export function truncateStringLogBugs(inputString: string, maxLength: number) {
-        // Kiểm tra độ dài của chuỗi
+    export function truncateStringForLogBugs(inputString: string, maxLength: number): string {
+        // Check if the input string length is less than or equal to the maximum length
         if (inputString.length <= maxLength) {
-            return inputString; // Trả về nguyên chuỗi nếu độ dài không vượt quá giới hạn
+            return inputString; // Return the input string if its length is within the limit
         }
 
-        // Tách chuỗi thành mảng các giá trị
-        const values = inputString.split('|').filter(Boolean);
+        // Split the string into an array of values, delimited by '|', and remove empty values
+        const values: string[] = inputString.split('|').filter(Boolean);
 
-        // Xóa các giá trị đầu chuỗi để giảm độ dài xuống dưới giới hạn
+        // Remove values from the beginning of the array until the length is within the limit
         while (inputString.length > maxLength) {
-            values.shift();
-            inputString = values.join('|');
+            values.shift(); // Remove the first value from the array
+            inputString = values.join('|'); // Reconstruct the string
         }
 
-        return inputString;
+        return inputString; // Return the truncated string
     }
 
-    export function replaceLastOccurrencesColor(inputString, targetChar, replacementChar) {
 
+    /**
+     * Replaces the last occurrences of a target character in a string with a replacement character.
+     *
+     * @param {string} inputString - The input string where replacements will occur.
+     * @param {string} targetChar - The character to be replaced.
+     * @param {string} replacementChar - The character to replace the target character.
+     * @returns {string} - The modified string with the last occurrences of the target character replaced.
+     *
+     * Example:
+     * replaceLastOccurrences('abcdeabcde', 'd', 'X')
+     * // Returns: 'abcdeabcXe'
+     */
+    export function replaceLastOccurrences(inputString: string, targetChar: string, replacementChar: string): string {
+        // If the input string is short (less than or equal to 7 characters), simply append the replacementChar and return
         if (inputString?.length <= 7) {
-            return `${inputString}${replacementChar}`
+            return `${inputString}${replacementChar}`;
         }
+
+        // Reverse the input string, targetChar, and replacementChar
         const reversedInput = inputString?.split('').reverse().join('');
         const reversedTargetChar = targetChar?.split('').reverse().join('');
         const reversedReplacementChar = replacementChar?.split('').reverse().join('');
 
+        // Replace the last occurrence of reversedTargetChar with reversedReplacementChar in the reversedInput
         const reversedResult = reversedInput?.replace(reversedTargetChar, reversedReplacementChar);
-        const result = reversedResult?.split('').reverse().join('');
 
-        return result;
-    }
-
-    export const removeCharPhone = (inputString: string) => {
-        let cleanedString = inputString.replace(/[\+\- ]+/g, '');
-
-        if (cleanedString.startsWith('84')) {
-            cleanedString = cleanedString.replace('84', '');
-        }
-
-        return cleanedString;
+        // Reverse the result again to get the final modified string
+        return reversedResult?.split('').reverse().join('');
     }
 
 
-    export const convertDataCadastral = (data: any) => {
-        const dataArray: Array<any> = []
-        if (data !== undefined && data !== null) {
-            Object.keys(data).forEach(key => {
-                dataArray.push(data[key])
-            })
-            return dataArray
-        }
+    /**
+     * Generates a random alphanumeric string of specified length.
+     *
+     * @param {number} length - The length of the random string to be generated.
+     * @returns {string} - The randomly generated alphanumeric string.
+     *
+     * Example:
+     * generateRandomString(8)
+     * // Returns: '3sdf8G2h'
+     */
+    export const generateRandomString = (length: number): string => {
+        return Math.random().toString(36).substr(2, length);
     }
 
-    export const generateRandomString = () => {
-        return Math.random().toString(36).substr(2, 6);
-    }
 
-    export function getExtensionFileByPath(filePath: string){
-        const parts = filePath.split('.');
-        if (parts.length > 1) {
-            return parts.pop();
-        }
-        return '';
-    }
 }

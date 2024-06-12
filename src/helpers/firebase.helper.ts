@@ -11,7 +11,8 @@ import storage from '@react-native-firebase/storage';
 import {StringHelper} from "helpers/string.helper";
 import StorageHelper from "helpers/storage.helper";
 import {MMKV} from "react-native-mmkv";
-import {ENVIRONMENT} from "configs";
+import FileHelper from "helpers/file.helper";
+import { EEnvironment } from "configs";
 
 
 dayjs.extend(utc)
@@ -407,7 +408,7 @@ namespace FirebaseHelper {
      * File
      */
     export async function updateFile(filePath: string, folderName: string, fileName?: string): Promise<string> {
-        let reference = storage().ref(`/${folderName}/${fileName || (dayjs.utc().format(`img_HH_mm_SSS_DD_MM_YY`) + (StringHelper.getExtensionFileByPath(filePath) && ("." + StringHelper.getExtensionFileByPath(filePath))))}`);
+        let reference = storage().ref(`/${folderName}/${fileName || (dayjs.utc().format(`img_HH_mm_SSS_DD_MM_YY`) + (FileHelper.getFileExtension(filePath) && ("." + FileHelper.getFileExtension(filePath))))}`);
         return await reference.putFile(filePath)
             .then(async (result) => {
                 if(result.state === "success"){
@@ -475,7 +476,7 @@ namespace FirebaseHelper {
                             status: FirebaseConstant.ETypeOfBug.New,
                             user: StorageHelper.getBugOwnerId(),
                             time: timeMark,
-                            isDevSite: (new MMKV().getString("env") || (__DEV__ ? ENVIRONMENT.DEVELOP : ENVIRONMENT.PRODUCT)) === ENVIRONMENT.DEVELOP,
+                            isDevSite: (new MMKV().getString("env") || (__DEV__ ? EEnvironment.DEVELOP : EEnvironment.PRODUCT)) === EEnvironment.DEVELOP,
                             detail: StorageHelper.getBugLog(),
                             type: typeError,
                             error: error,
@@ -503,7 +504,7 @@ namespace FirebaseHelper {
                         status: FirebaseConstant.ETypeOfBug.New,
                         user: StorageHelper.getBugOwnerId(),
                         time: timeMark,
-                        isDevSite: (new MMKV().getString("env") || (__DEV__ ? ENVIRONMENT.DEVELOP : ENVIRONMENT.PRODUCT)) === ENVIRONMENT.DEVELOP,
+                        isDevSite: (new MMKV().getString("env") || (__DEV__ ? EEnvironment.DEVELOP : EEnvironment.PRODUCT)) === EEnvironment.DEVELOP,
                         detail: StorageHelper.getBugLog(),
                         type: typeError,
                         error: error,

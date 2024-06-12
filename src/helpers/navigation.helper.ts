@@ -1,30 +1,30 @@
-import {createNavigationContainerRef, StackActions} from '@react-navigation/native';
+import { createNavigationContainerRef, StackActions } from "@react-navigation/native";
 
-export let TIMESTAMP_LAST_SCREEN_OPENING = 0
+export let TIMESTAMP_LAST_SCREEN_OPENING = 0;
 
-namespace NavigationHelper{
+namespace NavigationHelper {
 
-  export const navigationRef = createNavigationContainerRef()
+  export const navigationRef = createNavigationContainerRef();
 
 // @ts-ignore
-  export const navigate = (name, params?) => {
+  export const navigate = (screenName: string, params?: object) => {
     if (navigationRef.isReady()) {
       // @ts-ignore
-      navigationRef.navigate(name, params);
+      navigationRef.navigate(screenName, params);
     }
-  }
+  };
 
-  export const push = (name, params?) => {
+  export const push = (screenName: string, params?: object) => {
     if (navigationRef.isReady()) {
-      navigationRef.dispatch(StackActions.push(name, params))
+      navigationRef.dispatch(StackActions.push(screenName, params));
     }
-  }
+  };
 
-  export const pop = (n = 1) => {
+  export const pop = (numOfStack: number = 1) => {
     if (navigationRef.isReady()) {
-      navigationRef.dispatch(StackActions.pop(n))
+      navigationRef.dispatch(StackActions.pop(numOfStack));
     }
-  }
+  };
 
 
   export const goBack = () => {
@@ -36,20 +36,20 @@ namespace NavigationHelper{
 
       }
     }
-  }
+  };
 
   export const canGoBack = () => {
-    return navigationRef.canGoBack()
-  }
+    return navigationRef.canGoBack();
+  };
 
   export const getRouteName = () => {
     if (navigationRef.isReady()) {
-      return navigationRef.getCurrentRoute()?.name
+      return navigationRef.getCurrentRoute()?.name;
     }
-    return ""
-  }
+    return "";
+  };
 
-  export const getActiveRouteName = (state) => {
+  export const getActiveRouteName = (state: any): any => {
     const route = state?.routes?.[state.index];
 
     if (route?.state) {
@@ -58,20 +58,20 @@ namespace NavigationHelper{
     }
 
     return route?.name;
-  }
+  };
 
-  export const replace = (name, params = {}) => {
-    if (navigationRef.isReady() && getRouteName() !== name) {
-      navigationRef.dispatch(StackActions.replace(name, params))
+  export const replace = (screenName: string, params?: object) => {
+    if (navigationRef.isReady() && getRouteName() !== screenName) {
+      navigationRef.dispatch(StackActions.replace(screenName, params));
     }
-  }
+  };
 
   /**
    * Variable to store the timestamp of screen opening
    */
   export function updateTimestampLastScreenOpening() {
-    TIMESTAMP_LAST_SCREEN_OPENING = new Date().getTime()
+    TIMESTAMP_LAST_SCREEN_OPENING = new Date().getTime();
   }
 }
 
-export default NavigationHelper
+export default NavigationHelper;
