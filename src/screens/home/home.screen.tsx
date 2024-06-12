@@ -14,7 +14,7 @@ import FirebaseHelper from "helpers/firebase.helper";
 import navigationHelper from "helpers/navigation.helper";
 import { NAVIGATION_LOGS_BUG_SCREEN } from "constants/system/navigation.constant";
 import SkeletonContainerComponent from "components/skeleton/skeletonContainer.component";
-import BTextEllipsis from "components/base/textEllipsis/textEllipsis.d";
+import BTextEllipsis from "components/base/textEllipsis/textEllipsis.base";
 
 
 export default function HomeScreen() {
