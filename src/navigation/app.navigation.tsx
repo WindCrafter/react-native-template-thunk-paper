@@ -114,7 +114,7 @@ export default function AppNavigation() {
                                              StorageHelper.setBugLog(routeNameRef.current);
                                              NavigationHelper.updateTimestampLastScreenOpening()
                                              FirebaseHelper.logScreenView(routeNameRef.current)
-                                             RNBootSplash.hide({fade: false});
+                                             RNBootSplash.hide({fade: true});
                                          }}
                                          onStateChange={async () => {
                                              NavigationHelper.updateTimestampLastScreenOpening()
