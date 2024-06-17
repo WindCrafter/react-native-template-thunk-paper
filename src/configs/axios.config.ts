@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import AxiosHelper from "helpers/axios.helper";
 import { appUrlConfig } from "configs/index";
 
-const storage = new MMKV();
+const storageMMKV = new MMKV();
 
 
 const TIMEOUT = Number(appUrlConfig.APP_API_REQUEST_TIMEOUT);
@@ -32,7 +32,7 @@ export default function setupAxiosInterceptors(onUnauthenticated: (status: numbe
      * @param axios_config
      */
     const onRequestSuccess = async (axios_config: any) => {
-        axios_config.headers["X-Authorization"] = storage.getString("session");
+        axios_config.headers["X-Authorization"] = storageMMKV.getString("token");
 
         // Append cache buster to URL
         const cacheBuster = Math.round(Math.random() * 1000000);
@@ -73,12 +73,6 @@ export default function setupAxiosInterceptors(onUnauthenticated: (status: numbe
      */
     const onResponseSuccess = async (response: AxiosResponse<any, any>) => {
         AxiosHelper.createLogsFromResponse(response, false);
-
-        // set session
-        const session = response.headers["x-authorization"];
-        if (session) {
-            storage.set("session", session);
-        }
 
         // Log response details
         let Method = String(response.config.method).toUpperCase();

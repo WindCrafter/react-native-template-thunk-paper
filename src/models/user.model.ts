@@ -3,6 +3,16 @@ export interface IUser{
   name: string
 }
 
+export interface IUserToken{
+  access_token: string,
+  refresh_token: string,
+
+  /**
+   * timestamp
+   */
+  expires_at: string
+}
+
 interface IDefaultLoginParam {
   device_uuid?: string;
   device_type?: string;
