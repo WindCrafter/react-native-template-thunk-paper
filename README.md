@@ -79,3 +79,9 @@ GlobalHelper.showLoadingHelper(true, duration);
 //Ẩn loading
 GlobalHelper.hideLoadingHelper();
 ```
+
+
+
+yarn react-native generate-bootsplash src/assets/images/logo.png --background=FFFFFF --logo-width=280
+- Generate logo: yarn react-native generate-logo ./src/assets/images/logo.png
+- Generate folder: yarn react-native rename elza_vn

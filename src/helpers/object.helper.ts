@@ -109,7 +109,7 @@ namespace ObjectHelper {
    * @param entity The object to be cleaned.
    * @returns A new object with only non-empty 'id' fields.
    */
-  export function removeEmptyIdFields(entity: Record<string, any>): Record<string, any> {
+  export function removeEmptyFields(entity: Record<string, any>): Record<string, any> {
     // Get keys of the entity that are not objects or have non-empty 'id' fields
     const keysToKeep = Object.keys(entity).filter(key =>
       !(entity[key] instanceof Object) || (entity[key]?.id !== "" && entity[key]?.id !== -1)

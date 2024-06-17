@@ -11,7 +11,7 @@ module.exports = {
         { },
       ) => {
         const path = require("path");
-        const { generate } = require("./scripts/generate");
+        const { generate } = require("./scripts/generateLogo");
 
         const workingPath =
           process.env.INIT_CWD || process.env.PWD || process.cwd();
@@ -32,7 +32,7 @@ module.exports = {
         "Rename Project to <name>",
       options: [],
       func: ([name]) => {
-        const { rename } = require("./scripts/rename");
+        const { rename } = require("./scripts/renameProject");
         return rename({
           name,
         }).catch((error) => {
