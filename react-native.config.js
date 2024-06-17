@@ -25,21 +25,7 @@ module.exports = {
           console.error(error);
         });
       },
-    },
-    {
-      name: "rename <name>",
-      description:
-        "Rename Project to <name>",
-      options: [],
-      func: ([name]) => {
-        const { rename } = require("./scripts/renameProject");
-        return rename({
-          name,
-        }).catch((error) => {
-          console.error(error);
-        });
-      },
-    },
+    }
   ],
   dependencies: {
     'react-native-vector-icons': {
