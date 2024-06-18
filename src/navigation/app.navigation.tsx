@@ -27,6 +27,10 @@ import ViewShot, {CaptureOptions} from "react-native-view-shot";
 import MainNavigator from "navigation/main.navigation";
 import StorageHelper from "helpers/storage.helper";
 import {MMKV} from "react-native-mmkv";
+import dayjs from "dayjs";
+import {refreshTokenThunk} from "store/reducers/user.reducer.store";
+import navigationHelper from "helpers/navigation.helper";
+import App from "../../App";
 const storage = new MMKV()
 
 setupAxiosInterceptors((status: number) => {
@@ -44,40 +48,35 @@ const optionsScreenShot: CaptureOptions = {format: "jpg", quality: 0.8}
 const NativeStack = createNativeStackNavigator();
 
 export default function AppNavigation() {
+
     const isAuthenticated = useAppSelector(state => state.user.isAuthenticated);
+    const tokenExpires = useAppSelector(state => state.user.tokenExpires);
+    const oldTokenExpires = useMemo(()=>tokenExpires,[])
     const routeNameRef = useRef("");
     const themeType = useAppSelector((state) => state.system.themeType);
-    const [isProduct, setIsProduct] = useState<boolean | null>(null);
+    const [isProduct, setIsProduct] = useState<boolean | null>((storage.getString("env") || (__DEV__ ? EEnvironment.DEVELOP : EEnvironment.PRODUCT))===EEnvironment.PRODUCT);
     const theme = useMemo(() => THEME[themeType], [themeType])
     const dispatch = useAppDispatch();
 
+
+    useLayoutEffect(() => {
+        if(isAuthenticated){
+            /**
+             * Refresh the token when open app
+             * Backend-er said "It ok"
+             */
+            dispatch(refreshTokenThunk())
+        }
+
+        StorageHelper.clearBugLog()
+    }, []);
+
     useEffect(() => {
-        /**
-         *
-         */
         // const updateFirebaseToken = async () => {
         //   const token = await getFCMTokenHelper();
         //   dispatch(setTokenFirebase(token));
         // };
         // updateFirebaseToken();
-    }, []);
-
-    const onErrorCrashApp = useCallback((error: any, stackTrace: string) => {
-        if (!__DEV__) {
-            // createBugToFilesStoreHelper(String(error), stackTrace, "crash", navigationHelper.getRouteName() || "");
-        }
-    }, []);
-
-
-    useLayoutEffect(() => {
-        StorageHelper.clearBugLog()
-    }, []);
-
-    useEffect(() => {
-        const env = storage.getString("env") || (__DEV__ ? EEnvironment.DEVELOP : EEnvironment.PRODUCT);
-
-        setUrlEnv(env === EEnvironment.PRODUCT);
-        setIsProduct(env === EEnvironment.PRODUCT);
 
         StorageHelper.setBugDevice();
 
@@ -94,8 +93,14 @@ export default function AppNavigation() {
     //   }
     // }, [isProduct])
 
+    const onErrorCrashApp = useCallback((error: any, stackTrace: string) => {
+        if (!__DEV__) {
+            FirebaseHelper.createLogBug(String(error), stackTrace, "crash", navigationHelper.getRouteName() || "");
+        }
+    }, []);
 
-    if (isProduct === null) {
+
+    if (isAuthenticated && dayjs(tokenExpires).isSame(oldTokenExpires)) {
         return null;
     }
 
