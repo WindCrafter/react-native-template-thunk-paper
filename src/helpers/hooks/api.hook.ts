@@ -1,130 +1,137 @@
-import React, { useEffect, useRef } from "react";
+import {useEffect} from "react";
 import {useAppDispatch} from "configs/store.config";
 import GlobalHelper from "helpers/globalHelper";
 import {ESystemStatus} from "constants/system/system.constant";
 import languages from "constants/system/languages";
+import {StringHelper} from "helpers/string.helper";
 
 namespace IAPIHook {
-  export interface ICallThunk {
-    dispatchFunction?: Function;
-    params?: any;
-    messageSuccess?: string;
-    actionSuccess?: Function;
-    showLoading?: boolean;
+    export interface ICallThunk {
+        dispatchFunction?: Function;
+        params?: any;
+        messageSuccess?: string;
+        actionSuccess?: Function;
+        showLoading?: boolean;
+        autoHideLoading?: boolean;
+        messageFailed?: string;
+        actionFailed?: Function;
+        functionService?: Function;
+        showMessageFailed?: boolean
+    }
 
-    autoHideLoading?: boolean;
-    messageFailed?: string;
-    actionFailed?: Function;
-    functionService?: Function;
-  }
-
-  export interface ICallApi {
-    dispatchFunction?: Function
-    params: any
-    messageSuccess?: string
-    showMessageFailed?: boolean
-    actionSuccess?: Function
-    showLoading?: boolean
-    hideLoading?: boolean
-    messageFailed?: string
-    actionFailed?: Function
-    functionService?: Function
-  }
+    export interface ICallApi {
+        dispatchFunction?: Function
+        params: any
+        messageSuccess?: string
+        showMessageFailed?: boolean
+        actionSuccess?: Function
+        showLoading?: boolean
+        hideLoading?: boolean
+        messageFailed?: string
+        actionFailed?: Function
+        functionService?: Function
+    }
 }
 
 export const useAPI = <T>() => {
-  const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
-  const callThunk = async ({
-                             dispatchFunction,
-                             params,
-                             messageSuccess,
-                             messageFailed,
-                             showLoading = true,
-                             autoHideLoading = false,
-                             actionSuccess,
-                             actionFailed
-                           }: IAPIHook.ICallThunk) => {
-    if (showLoading) {
-      GlobalHelper.showLoading(autoHideLoading);
-    }
+    const callThunk = async ({
+                                 dispatchFunction,
+                                 params,
+                                 messageSuccess,
+                                 messageFailed,
+                                 showLoading = true,
+                                 showMessageFailed = true,
+                                 autoHideLoading = false,
+                                 actionSuccess,
+                                 actionFailed
+                             }: IAPIHook.ICallThunk) => {
+        if (showLoading) {
+            GlobalHelper.showLoading(autoHideLoading);
+        }
 
-    const res = await dispatch(dispatchFunction?.(params));
-    GlobalHelper.hideLoading();
-
-    if (res.payload?.data) {
-      if (actionSuccess) {
-        actionSuccess?.(res.payload.data);
-      }
-      if (messageSuccess) {
-        GlobalHelper.showSnackBar({
-          type: ESystemStatus.Success,
-          content: messageSuccess
-        });
-      }
-      return;
-    }
-
-    const message = Array.isArray(res.error?.message) ? res.error?.message?.[0] : (res.error?.message || languages.somethingWentWrong);
-    if (messageFailed) {
-      GlobalHelper.showSnackBar({
-        type: ESystemStatus.Error,
-        content: messageFailed || message
-      });
-    }
-    actionFailed?.(message);
-  };
-
-  const callService = async ({
-                               functionService,
-                               params,
-                               messageSuccess = "",
-                               showMessageFailed = true,
-                               actionSuccess = undefined,
-                               showLoading = true,
-                               hideLoading = true,
-                               actionFailed,
-                               messageFailed = ""
-                             }: IAPIHook.ICallApi) => {
-    try {
-      if (showLoading) {
-        GlobalHelper.showLoading();
-      }
-      const res = await functionService?.(params);
-      if (hideLoading) {
+        const res = await dispatch(dispatchFunction?.(params));
         GlobalHelper.hideLoading();
-      }
-      if (res) {
-        if (actionSuccess) {
-          actionSuccess?.(res);
+        console.log(res, "phuc")
+        if ((res.payload?.status <= 299 && res.payload?.status >= 200) || res.payload?.data) {
+            if (actionSuccess) {
+                actionSuccess?.(res.payload.data);
+            }
+            if (messageSuccess) {
+                GlobalHelper.showSnackBar({
+                    type: ESystemStatus.Success,
+                    content: messageSuccess
+                });
+            }
+            return;
         }
-        if (messageSuccess) {
-          GlobalHelper.showSnackBar({
-            type: ESystemStatus.Success,
-            content: messageSuccess
-          });
-        }
-        return;
-      }
-      actionFailed?.("Network Error");
-    } catch (error: any) {
-      GlobalHelper.hideLoading();
-      const messages = error?.response?.data?.message;
-      const message = Array.isArray(messages) ? messages?.[0] : (messages || languages.somethingWentWrong);
-      if (showMessageFailed) {
-        // @ts-ignore
-        let messageContent = languages[message];
-        console.log("Call api failed", message, params);
-        GlobalHelper.showSnackBar({
-          type: ESystemStatus.Error,
-          content: messageFailed || messageContent || message
-        });
-      }
-      actionFailed?.(message);
-    }
-  };
 
-  return { callThunk, callService };
+        const message = Array.isArray(res.error?.message) ? res.error?.message?.[0] : (res.error?.message || languages.somethingWentWrong);
+        if (showMessageFailed) {
+            // @ts-ignore
+            let messageContent = languages.error[StringHelper.removeSpecialCharacters(message).toLowerCase()];
+
+            console.log(messageFailed || messageContent || message)
+            GlobalHelper.showSnackBar({
+                type: ESystemStatus.Error,
+                content: messageFailed || messageContent || message
+            });
+        }
+
+        actionFailed?.(message);
+    };
+
+    const callService = async ({
+                                   functionService,
+                                   params,
+                                   messageSuccess = "",
+                                   showMessageFailed = true,
+                                   actionSuccess = undefined,
+                                   showLoading = true,
+                                   hideLoading = true,
+                                   actionFailed,
+                                   messageFailed = ""
+                               }: IAPIHook.ICallApi) => {
+        try {
+            if (showLoading) {
+                GlobalHelper.showLoading();
+            }
+            const res = await functionService?.(params);
+            if (hideLoading) {
+                GlobalHelper.hideLoading();
+            }
+            if (res) {
+                if (actionSuccess) {
+                    actionSuccess?.(res);
+                }
+                if (messageSuccess) {
+                    GlobalHelper.showSnackBar({
+                        type: ESystemStatus.Success,
+                        content: messageSuccess
+                    });
+                }
+                return;
+            }
+            actionFailed?.("Network Error");
+        } catch (error: any) {
+            GlobalHelper.hideLoading();
+            const messages = error?.response?.data?.message;
+            const message = Array.isArray(messages) ? messages?.[0] : (messages || languages.somethingWentWrong);
+            if (showMessageFailed) {
+                // @ts-ignore
+                let messageContent = languages.error[StringHelper.removeSpecialCharacters(message).toLowerCase()];
+                console.log(messageFailed || messageContent || message);
+                GlobalHelper.showSnackBar({
+                    type: ESystemStatus.Error,
+                    content: messageFailed || messageContent || message
+                });
+            }
+            actionFailed?.(message);
+        }
+    };
+
+    return {callThunk, callService};
 };
 
 /**
@@ -135,25 +142,25 @@ export const useAPI = <T>() => {
  * @param arrayCallbackFunction - An array of callback functions to handle the results of the asynchronous function.
  */
 export function useAsync<T>(asyncFn: () => Promise<T[]>, arrayCallbackFunction: ((item: T) => void)[]) {
-  useEffect(() => {
-    let isActive = true;
+    useEffect(() => {
+        let isActive = true;
 
-    try {
-      asyncFn().then((data: T[]) => {
-        if (isActive) {
-          data.forEach((itemResult, index) => {
-            if (itemResult && typeof arrayCallbackFunction[index] === "function")
-              arrayCallbackFunction[index](itemResult);
-          });
+        try {
+            asyncFn().then((data: T[]) => {
+                if (isActive) {
+                    data.forEach((itemResult, index) => {
+                        if (itemResult && typeof arrayCallbackFunction[index] === "function")
+                            arrayCallbackFunction[index](itemResult);
+                    });
+                }
+            })
+                .catch((error) => console.error(error));
+        } catch (error) {
+            console.error(error);
         }
-      })
-        .catch((error) => console.error(error));
-    } catch (error) {
-      console.error(error);
-    }
 
-    return () => {
-      isActive = false;
-    };
-  }, [asyncFn]);
+        return () => {
+            isActive = false;
+        };
+    }, [asyncFn]);
 }
