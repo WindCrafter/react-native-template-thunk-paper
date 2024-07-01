@@ -203,4 +203,23 @@ export namespace StringHelper {
     }
 
 
+    /**
+     * Removes all special characters from a given string.
+     * Special characters include anything that is not a letter (a-z, A-Z) or number (0-9).
+     *
+     * @param {string} str - The input string from which special characters will be removed.
+     * @returns {string} - The cleaned string with all special characters removed.
+     */
+    export const removeSpecialCharacters = (str: string)=> {
+        // Define a regular expression pattern that matches any character that is not
+        // a letter (a-z, A-Z) or a number (0-9). The pattern uses the ^ symbol inside
+        // the brackets [] to negate the character set, meaning it will match anything
+        // that is not specified within the brackets.
+        const regex = /[^a-zA-Z0-9]/g;
+
+        // Use the string's replace method with the regular expression to replace all
+        // occurrences of special characters with an empty string, effectively removing them.
+        // Return the cleaned string.
+        return str.replace(regex, '');
+    }
 }
