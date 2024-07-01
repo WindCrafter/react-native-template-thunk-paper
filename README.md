@@ -2,10 +2,19 @@
 
 
 # Bắt đầu bằng cách
-- Clone project về
-- Đặt logo.png vào thư mục src/assets/images
-- Tạo logo và splash screen: yarn react-native generate-logo ./src/assets/images/logo.png
-- Đổi tên project: $ npx react-native-rename@latest "new_name" -b "bundle_identifier"
+> Clone project về
+
+> Đặt logo.png vào thư mục src/assets/images
+
+> Tạo logo và splash screen
+```
+yarn react-native generate-logo ./src/assets/images/logo.png
+```
+> Đổi tên project với [react-native-rename](https://github.com/junedomingo/react-native-rename)
+```
+npx react-native-rename@latest "new_name" -b "bundle_identifier"
+```
+
 
 # Cấu trúc thư mục
 
