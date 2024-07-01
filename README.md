@@ -1,5 +1,12 @@
 # react-native-template-thunk-paper
- 
+
+
+# Bắt đầu bằng cách
+- Clone project về
+- Đặt logo.png vào thư mục src/assets/images
+- Tạo logo và splash screen: yarn react-native generate-logo ./src/assets/images/logo.png
+- Đổi tên project: $ npx react-native-rename@latest "new_name" -b "bundle_identifier"
+
 # Cấu trúc thư mục
 
 * scripts: Các script hỗ trợ tác vụ như log, đổi tên dự án, tạo logo, v.v...
@@ -42,6 +49,7 @@ Dự án hỗ trợ theme và tôi cũng đã cài đặt sẵn việc chuyển 
 ### Thay đổi tên dự án
 ### Log lại thay đổi các bản cập nhật
 ### Ghi nhận log lên railway
+### Nhiều component hay ho trong quá trình mình dev đã được tổng hợp lại
 
 
 # Giới thiệu các hàm hỗ trợ
@@ -79,9 +87,3 @@ GlobalHelper.showLoadingHelper(true, duration);
 //Ẩn loading
 GlobalHelper.hideLoadingHelper();
 ```
-
-
-
-yarn react-native generate-bootsplash src/assets/images/logo.png --background=FFFFFF --logo-width=280
-- Generate logo: yarn react-native generate-logo ./src/assets/images/logo.png
-- Generate folder: yarn react-native rename elza_vn
