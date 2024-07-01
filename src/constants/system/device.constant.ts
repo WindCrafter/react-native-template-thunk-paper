@@ -15,6 +15,7 @@ export const Device = {
   ratio: width / heightScreen,
   width,
   height,
+  insets: initialWindowMetrics?.insets,
   isWeb: Platform.OS === "web",
   isIos: Platform.OS === "ios",
   isAndroid: Platform.OS === "android",
