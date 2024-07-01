@@ -1,4 +1,4 @@
-import { createNavigationContainerRef, StackActions } from "@react-navigation/native";
+import {createNavigationContainerRef, NavigationState, PartialState, StackActions} from "@react-navigation/native";
 
 export let TIMESTAMP_LAST_SCREEN_OPENING = 0;
 
@@ -11,6 +11,12 @@ namespace NavigationHelper {
     if (navigationRef.isReady()) {
       // @ts-ignore
       navigationRef.navigate(screenName, params);
+    }
+  };
+
+  export const reset = (params: (PartialState<NavigationState> | NavigationState)) => {
+    if (navigationRef.isReady()) {
+      navigationRef.reset(params);
     }
   };
 
