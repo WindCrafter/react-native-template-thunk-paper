@@ -18,11 +18,21 @@ import RNRestart from "react-native-restart";
 import { MMKV } from "react-native-mmkv";
 import { EEnvironment } from "configs";
 import { ESystemStatus } from "constants/system/system.constant";
+import BDivider from "components/base/divider.base";
+import HorizontalSlideListComponent from "components/list/horizontalSlide.list.component";
+import {Device} from "constants/system/device.constant";
 
 const storage = new MMKV()
 
+const DATA_IMAGE = [
+  {image:require('assets/images/image1.png')},
+  {image:require('assets/images/image2.png')},
+  {image:require('assets/images/image3.png')},
+  {image:require('assets/images/image4.png')},
+]
+
 export default function HomeScreen() {
-  const { styles } = useSystemTheme(createStyles);
+  const { styles, theme } = useSystemTheme(createStyles);
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   function showSnackBar() {
@@ -97,6 +107,27 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.componentView}>
+          <BText variant={"headlineMedium"}>Divider</BText>
+          <BDivider style={{height:2}} />
+          <BDivider style={{height:2}} type={'dashed'}/>
+          <BDivider style={{height:2}} type={'dotted'}/>
+        </View>
+
+        <View style={styles.componentView}>
+          <BText variant={"headlineMedium"}>Divider</BText>
+          <HorizontalSlideListComponent
+              width={Device.width-HS._48}
+              height={(Device.width-HS._48)/2.63}
+              style={styles.styleSlide}
+              images={DATA_IMAGE}
+              infinity
+              activeDotColor={theme.colors.secondary}
+              containerDotStyle={styles.containerDotStyle}
+              autoPlay
+          />
+        </View>
+
+        <View style={styles.componentView}>
           <BText variant={"headlineMedium"}>Skeleton</BText>
           <Divider />
 
@@ -160,6 +191,14 @@ const createStyles = (theme: ITheme) => {
       alignItems: "center",
       justifyContent: "center",
       backgroundColor: theme.colors.infoContainer
-    }
+    },
+    styleSlide:{
+      borderRadius: MHS._12
+    },
+    containerDotStyle:{
+      position:'absolute',
+      bottom: MHS._6,
+      alignSelf:'center'
+    },
   });
 };
