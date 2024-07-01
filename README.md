@@ -16,6 +16,10 @@ npx react-native-rename@latest "new_name" -b "bundle_identifier"
 ```
 
 
+# Figma
+Ném figma này cho design để họ có thể hiểu ta có gì hơn
+[Figma -Material 3 Design Kit](https://www.figma.com/design/JGrJ4fCiGC28BjQ8g4dvaL/Material-3-Design-Kit-(Community)?node-id=54795-25395&t=Caw0ISAIMApSLNaM-1)
+
 # Cấu trúc thư mục
 
 * scripts: Các script hỗ trợ tác vụ như log, đổi tên dự án, tạo logo, v.v...
