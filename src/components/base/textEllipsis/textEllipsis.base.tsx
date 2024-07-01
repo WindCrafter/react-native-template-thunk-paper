@@ -1,4 +1,4 @@
-import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
+import React, {memo, useCallback, useLayoutEffect, useRef, useState} from "react";
 import { Text } from "react-native-paper";
 import { NativeSyntheticEvent, StyleProp, StyleSheet, TextLayoutEventData, TextStyle } from "react-native";
 import BText from "components/base/text.base";
@@ -20,14 +20,14 @@ interface IBTextProps extends React.ComponentProps<typeof Text> {
  * @param props
  * @constructor
  */
-export default function BTextEllipsisAndroid({
+const BTextEllipsis = ({
                                         numberOfLines,
                                         onTextLayout,
                                         children,
                                         styleReadMoreText,
                                         style,
                                         ...props
-                                      }: IBTextProps): React.JSX.Element {
+                                      }: IBTextProps): React.JSX.Element => {
 
   const [isNeedReadMore, setIsNeedReadMore] = useState(false);
   const [_, setStateForReRender] = useState(false);
@@ -102,3 +102,4 @@ export default function BTextEllipsisAndroid({
   );
 }
 
+export default memo(BTextEllipsis)
