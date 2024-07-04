@@ -8,7 +8,7 @@
 
     <style name="BootTheme" parent="Theme.BootSplash">
         <item name="bootSplashBackground">@color/bootsplash_background</item>
-        <item name="bootSplashLogo">@drawable/bootsplash_logo</item>
+        <item name="bootSplashLogo">@mipmap/bootsplash_logo</item>
 <!--        <item name="bootSplashBrand">@drawable/bootsplash_brand</item> &lt;!&ndash; Only if you have a brand image &ndash;&gt;-->
         <item name="postBootSplashTheme">@style/AppTheme</item>
         <item name="android:statusBarColor" tools:targetApi="m">@color/bootsplash_background</item>
