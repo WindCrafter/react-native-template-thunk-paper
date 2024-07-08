@@ -1,6 +1,6 @@
-import { Dimensions, Platform, StatusBar } from "react-native";
-import { getStatusBarHeight } from "react-native-safearea-height";
-import { initialWindowMetrics } from "react-native-safe-area-context";
+import {Dimensions, Platform, StatusBar} from "react-native";
+import {getStatusBarHeight} from "react-native-safearea-height";
+import {initialWindowMetrics} from "react-native-safe-area-context";
 import DeviceInfo from "react-native-device-info";
 
 const { width, height } = Dimensions.get("window");

@@ -1,8 +1,8 @@
-import React, {useMemo} from "react";
+import React from "react";
 import {StyleProp, TextStyle} from "react-native";
-import {Text} from "react-native-paper";
+import BText from "components/base/text.base";
 
-interface IBTextMultiProps extends Omit<React.ComponentProps<typeof Text>, "children" | "style"> {
+interface IBTextMultiProps extends Omit<React.ComponentProps<typeof BText>, "children" | "style" | "fontWeight" | 'color'> {
     children: string,
     [key: string]: any
 }
@@ -27,13 +27,13 @@ export default function BTextMulti({children, ...props}: IBTextMultiProps & TMul
         let currentStyle: StyleProp<TextStyle> = {}
         return contentSegments.map((contentSegment, index) => {
             currentStyle = [currentStyle, props[`style${(Math.min(index, 21)) + 1}`] || {}]
-            return <Text key={index.toString()} style={currentStyle}>{contentSegment}</Text>
+            return <BText key={index.toString()} style={currentStyle}>{contentSegment}</BText>
         })
     }
 
     return (
-        <Text {...props}>
+        <BText {...props}>
             {renderMultiText()}
-        </Text>
+        </BText>
     );
 }

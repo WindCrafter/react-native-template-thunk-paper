@@ -1,11 +1,11 @@
-import React, { useCallback } from "react";
-import { FlatList, StyleSheet } from "react-native";
-import { useSystemTheme } from "helpers/hooks/system.hook";
-import { HS, MHS, VS } from "constants/system/ui/sizes.ui.constant";
-import { ITheme } from "constants/system/ui/theme.constant";
-import { Device } from "constants/system/device.constant";
+import React, {useCallback} from "react";
+import {FlatList, StyleSheet} from "react-native";
+import {useSystemTheme} from "helpers/hooks/system.hook";
+import {HS, MHS, VS} from "constants/system/ui/sizes.ui.constant";
+import {ITheme} from "constants/system/ui/theme.constant";
+import {Device} from "constants/system/device.constant";
 import dataReleaseNote from "../../../scripts/releaseLogs.json";
-import { Surface } from "react-native-paper";
+import {Surface} from "react-native-paper";
 import BText from "components/base/text.base";
 
 const ReleaseLogsScreen = () => {

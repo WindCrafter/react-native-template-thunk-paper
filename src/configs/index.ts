@@ -1,5 +1,5 @@
 import Config from "react-native-config";
-import { MMKV } from "react-native-mmkv";
+import {MMKV} from "react-native-mmkv";
 
 // Define the possible environments
 export enum EEnvironment {

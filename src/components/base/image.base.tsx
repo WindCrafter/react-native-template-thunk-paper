@@ -24,7 +24,7 @@ function BImage({width, height, round, style, ...props}: IBImageProps): React.JS
         })
     }, [style, width, height, round])
 
-    return <Image {...props} placeholder={BLUR_HASH} style={[style, styleImage]}/>
+    return <Image transition={800} {...props} placeholder={BLUR_HASH} style={[style, styleImage]}/>
 }
 
 

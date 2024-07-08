@@ -3,6 +3,7 @@ import {HelperText, TextInput} from "react-native-paper";
 import {Control, RegisterOptions, useController} from "react-hook-form";
 import {View} from "react-native";
 import {BStyle} from "constants/system/ui/styles.constant";
+
 interface IFTextInputProps extends React.ComponentProps<typeof TextInput> {
   control: Control<any>
   name: string

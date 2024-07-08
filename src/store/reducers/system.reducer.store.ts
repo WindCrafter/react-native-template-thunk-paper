@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { IThemeType } from "constants/system/system.constant";
+import {createSlice} from "@reduxjs/toolkit";
+import {IThemeType} from "constants/system/system.constant";
 
 
 interface InitialState {

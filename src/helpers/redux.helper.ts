@@ -1,15 +1,15 @@
-import { AxiosError } from "axios";
+import {AxiosError} from "axios";
 
 import {
-  ActionReducerMapBuilder,
-  AnyAction,
-  AsyncThunk,
-  createSlice,
-  SerializedError,
-  SliceCaseReducers,
-  ValidateSliceCaseReducers
+    ActionReducerMapBuilder,
+    AnyAction,
+    AsyncThunk,
+    createSlice,
+    SerializedError,
+    SliceCaseReducers,
+    ValidateSliceCaseReducers
 } from "@reduxjs/toolkit";
-import { globalApp } from "helpers/railway.helper";
+import {globalApp} from "helpers/railway.helper";
 
 
 namespace ReduxHelper{

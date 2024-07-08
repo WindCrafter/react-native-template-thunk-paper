@@ -1,11 +1,11 @@
 import * as React from "react";
+import {Children, useCallback, useEffect, useMemo} from "react";
 
-import { Animated, Easing, LayoutChangeEvent, LayoutRectangle, StyleSheet, View, ViewStyle } from "react-native";
+import {Animated, Easing, LayoutChangeEvent, LayoutRectangle, StyleSheet, View, ViewStyle} from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 
 import MaskedView from "@react-native-masked-view/masked-view";
-import { Device } from "constants/system/device.constant";
-import { Children, useCallback, useEffect, useMemo } from "react";
+import {Device} from "constants/system/device.constant";
 
 
 interface ISkeletonContainerComponentProps {

@@ -1,6 +1,5 @@
 import React, {forwardRef, memo, useCallback, useImperativeHandle, useRef, useState} from "react";
 import {Portal, Snackbar, SnackbarProps, useTheme} from "react-native-paper";
-import {ESystemStatus} from "constants/system/system.constant";
 import {ITheme} from "constants/system/ui/theme.constant";
 
 export interface SnackBarProps extends Omit<SnackbarProps, "children" | "visible" | "onDismiss"> {
@@ -8,7 +7,7 @@ export interface SnackBarProps extends Omit<SnackbarProps, "children" | "visible
   onDismiss?: () => void;
   children?: React.ReactNode;
   content?: string,
-  type?: ESystemStatus
+  type?: "info"|"warning"|"error"|"success"
 }
 
 export interface ISnackBarGlobalComponentRef {
@@ -43,7 +42,7 @@ function SnackBarGlobalComponent(_: any, ref: React.ForwardedRef<ISnackBarGlobal
     }
 
     setSnackBarProps({
-      type: ESystemStatus.Info, duration: 3000, onDismiss: () => {
+      type: props.type, duration: 3000, onDismiss: () => {
       }, theme, ...props, visible: true
     });
   }, []);

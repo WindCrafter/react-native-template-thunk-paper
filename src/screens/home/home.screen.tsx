@@ -1,23 +1,22 @@
-import React, { useRef } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import React, {useRef} from "react";
+import {ScrollView, StyleSheet, View} from "react-native";
 import BText from "components/base/text.base";
-import { FontSize, HS, MHS, VS } from "constants/system/ui/sizes.ui.constant";
-import { ITheme } from "constants/system/ui/theme.constant";
-import { useSystemTheme } from "helpers/hooks/system.hook";
-import { Divider } from "react-native-paper";
+import {FontSize, HS, MHS, VS} from "constants/system/ui/sizes.ui.constant";
+import {ITheme} from "constants/system/ui/theme.constant";
+import {useSystemTheme} from "helpers/hooks/system.hook";
+import {Divider} from "react-native-paper";
 import BTextMulti from "components/base/multiText.base";
 import BButton from "components/base/button.base";
 import BTextInput from "components/base/textInput.base";
 import GlobalHelper from "helpers/globalHelper";
-import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
+import BottomSheet, {BottomSheetBackdrop, BottomSheetView} from "@gorhom/bottom-sheet";
 import navigationHelper from "helpers/navigation.helper";
-import { NAVIGATION_LOGS_BUG_SCREEN, NAVIGATION_RELEASE_LOGS_SCREEN } from "constants/system/navigation.constant";
+import {NAVIGATION_LOGS_BUG_SCREEN, NAVIGATION_RELEASE_LOGS_SCREEN} from "constants/system/navigation.constant";
 import SkeletonContainerComponent from "components/skeleton/skeletonContainer.component";
 import BTextEllipsis from "components/base/textEllipsis/textEllipsis.base";
 import RNRestart from "react-native-restart";
-import { MMKV } from "react-native-mmkv";
-import { EEnvironment } from "configs";
-import { ESystemStatus } from "constants/system/system.constant";
+import {MMKV} from "react-native-mmkv";
+import {EEnvironment} from "configs";
 import BDivider from "components/base/divider.base";
 import HorizontalSlideListComponent from "components/list/horizontalSlide.list.component";
 import {Device} from "constants/system/device.constant";
@@ -43,7 +42,7 @@ export default function HomeScreen() {
     const env = storage.getString("env") || (__DEV__ ? EEnvironment.DEVELOP : EEnvironment.PRODUCT);
     if (env === EEnvironment.PRODUCT) {
       GlobalHelper.showSnackBar({
-        type: ESystemStatus.Success,
+        type: 'success',
         content: "Prepare to switch back to -----DEVELOPER MODE-----",
       });
       storage.set("env", EEnvironment.DEVELOP)
@@ -52,7 +51,7 @@ export default function HomeScreen() {
       }, 2000)
     } else {
       GlobalHelper.showSnackBar({
-        type: ESystemStatus.Success,
+        type: 'success',
         content: "Prepare to switch back to -----PRODUCTION MODE-----",
       });
       storage.set("env", EEnvironment.PRODUCT)

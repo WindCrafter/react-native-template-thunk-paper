@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {AccessibilityInfo, ViewProps} from "react-native";
+import {ViewProps} from "react-native";
 import {ActivityIndicator} from "react-native-paper";
 
 interface IBLazyProps extends ViewProps {

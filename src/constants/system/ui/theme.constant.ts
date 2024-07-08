@@ -1,8 +1,8 @@
 import {adaptNavigationTheme, configureFonts, MD3DarkTheme, MD3LightTheme, MD3Theme} from "react-native-paper";
 import {
-  DarkTheme as NavigationDarkTheme,
-  DefaultTheme as NavigationDefaultTheme,
-  Theme
+    DarkTheme as NavigationDarkTheme,
+    DefaultTheme as NavigationDefaultTheme,
+    Theme
 } from "@react-navigation/native";
 import {IThemeType} from "constants/system/system.constant";
 import SystemHelper from "helpers/system.helper";

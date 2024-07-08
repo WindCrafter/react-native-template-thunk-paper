@@ -1,5 +1,5 @@
-import { Appbar } from 'react-native-paper';
-import { getHeaderTitle } from '@react-navigation/elements';
+import {Appbar} from 'react-native-paper';
+import {getHeaderTitle} from '@react-navigation/elements';
 import {NativeStackHeaderProps} from "@react-navigation/native-stack/src/types";
 
 export default function DefaultAppbarComponent({ navigation, route, options, back }:NativeStackHeaderProps) {

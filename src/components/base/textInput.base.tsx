@@ -1,5 +1,5 @@
 import React from "react";
-import { TextInput } from "react-native-paper";
+import {TextInput} from "react-native-paper";
 
 interface IBTextInputProps extends React.ComponentProps<typeof TextInput> {
 

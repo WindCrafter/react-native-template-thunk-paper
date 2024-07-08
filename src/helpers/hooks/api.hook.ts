@@ -1,7 +1,6 @@
 import {useEffect} from "react";
 import {useAppDispatch} from "configs/store.config";
 import GlobalHelper from "helpers/globalHelper";
-import {ESystemStatus} from "constants/system/system.constant";
 import languages from "constants/system/languages";
 import {StringHelper} from "helpers/string.helper";
 
@@ -60,7 +59,7 @@ export const useAPI = <T>() => {
             }
             if (messageSuccess) {
                 GlobalHelper.showSnackBar({
-                    type: ESystemStatus.Success,
+                    type: "success",
                     content: messageSuccess
                 });
             }
@@ -74,7 +73,7 @@ export const useAPI = <T>() => {
 
             console.log(messageFailed || messageContent || message)
             GlobalHelper.showSnackBar({
-                type: ESystemStatus.Error,
+                type: 'error',
                 content: messageFailed || messageContent || message
             });
         }
@@ -107,7 +106,7 @@ export const useAPI = <T>() => {
                 }
                 if (messageSuccess) {
                     GlobalHelper.showSnackBar({
-                        type: ESystemStatus.Success,
+                        type: 'success',
                         content: messageSuccess
                     });
                 }
@@ -123,7 +122,7 @@ export const useAPI = <T>() => {
                 let messageContent = languages.error[StringHelper.removeSpecialCharacters(message).toLowerCase()];
                 console.log(messageFailed || messageContent || message);
                 GlobalHelper.showSnackBar({
-                    type: ESystemStatus.Error,
+                    type: 'error',
                     content: messageFailed || messageContent || message
                 });
             }

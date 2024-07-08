@@ -8,11 +8,10 @@ import GlobalHelper from "helpers/globalHelper";
 import {Device} from "constants/system/device.constant";
 import FirebaseConstant from "constants/firebase.constant";
 import storage from '@react-native-firebase/storage';
-import {StringHelper} from "helpers/string.helper";
 import StorageHelper from "helpers/storage.helper";
 import {MMKV} from "react-native-mmkv";
 import FileHelper from "helpers/file.helper";
-import { EEnvironment } from "configs";
+import {EEnvironment} from "configs";
 
 
 dayjs.extend(utc)

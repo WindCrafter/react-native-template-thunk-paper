@@ -20,17 +20,17 @@ import GlobalHelper from "helpers/globalHelper";
 import SnackBarGlobalComponent from "components/global/snackbar.global.component";
 import {PaperProvider} from "react-native-paper";
 import {THEME} from "constants/system/ui/theme.constant";
-import {EEnvironment, setUrlEnv} from "configs";
+import {EEnvironment} from "configs";
 import {VS} from "constants/system/ui/sizes.ui.constant";
 import NavigationHelper from "helpers/navigation.helper";
+import navigationHelper from "helpers/navigation.helper";
 import ViewShot, {CaptureOptions} from "react-native-view-shot";
 import MainNavigator from "navigation/main.navigation";
 import StorageHelper from "helpers/storage.helper";
 import {MMKV} from "react-native-mmkv";
 import dayjs from "dayjs";
 import {refreshTokenThunk} from "store/reducers/user.reducer.store";
-import navigationHelper from "helpers/navigation.helper";
-import App from "../../App";
+
 const storage = new MMKV()
 
 setupAxiosInterceptors((status: number) => {

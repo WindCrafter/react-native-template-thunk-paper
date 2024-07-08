@@ -1,6 +1,6 @@
 import {useEffect, useMemo} from "react";
 import {useAppSelector} from "configs/store.config";
-import {BackHandler, ImageStyle, TextStyle, ViewStyle} from "react-native";
+import {ImageStyle, TextStyle, ViewStyle} from "react-native";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import {useTheme} from "react-native-paper";

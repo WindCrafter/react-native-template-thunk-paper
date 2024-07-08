@@ -1,6 +1,6 @@
 import React, {memo, useCallback, useLayoutEffect, useRef, useState} from "react";
-import { Text } from "react-native-paper";
-import { NativeSyntheticEvent, StyleProp, StyleSheet, TextLayoutEventData, TextStyle } from "react-native";
+import {Text} from "react-native-paper";
+import {NativeSyntheticEvent, StyleProp, StyleSheet, TextLayoutEventData, TextStyle} from "react-native";
 import BText from "components/base/text.base";
 import languages from "constants/system/languages";
 

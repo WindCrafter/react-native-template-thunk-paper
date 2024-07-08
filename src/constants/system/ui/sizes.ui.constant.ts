@@ -5,6 +5,8 @@ const hs = SystemHelper.hs;
 const vs = SystemHelper.vs;
 const mvs = SystemHelper.mvs;
 
+export const HIT_SLOP_EXPAND_20 = {top: mhs(20), left: mhs(20), right: mhs(20), bottom: mhs(20)};
+export const HIT_SLOP_EXPAND_10 = {top: mhs(10), left: mhs(10), right: mhs(10), bottom: mhs(10)};
 
 /**
  * Fontsize for text and icon

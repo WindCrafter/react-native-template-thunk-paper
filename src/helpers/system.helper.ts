@@ -1,12 +1,9 @@
-import { Dimensions, StyleSheet } from "react-native";
 // import analytics from "@react-native-firebase/analytics";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import DeviceInfo from "react-native-device-info";
 // import { MMKV } from "react-native-mmkv";
-import { Device } from "constants/system/device.constant";
-import { MD3Colors } from "react-native-paper/lib/typescript/types";
-import { MHS } from "constants/system/ui/sizes.ui.constant";
+import {Device} from "constants/system/device.constant";
 
 // const storage = new MMKV();
 dayjs.extend(isBetween);

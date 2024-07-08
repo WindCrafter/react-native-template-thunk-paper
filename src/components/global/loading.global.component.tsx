@@ -1,7 +1,7 @@
-import React, { forwardRef, memo, useCallback, useImperativeHandle, useRef, useState } from "react";
-import { View } from "react-native";
-import { Device } from "constants/system/device.constant";
-import { ActivityIndicator, MD2Colors } from "react-native-paper";
+import React, {forwardRef, memo, useCallback, useImperativeHandle, useRef, useState} from "react";
+import {View} from "react-native";
+import {Device} from "constants/system/device.constant";
+import {ActivityIndicator, MD2Colors} from "react-native-paper";
 
 
 export interface ILoadingGlobalComponentRef {

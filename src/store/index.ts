@@ -1,4 +1,4 @@
-import { combineReducers } from "redux";
+import {combineReducers} from "redux";
 
 import system from "./reducers/system.reducer.store";
 import user from "./reducers/user.reducer.store";

@@ -1,9 +1,9 @@
-import { AnyAction, configureStore, ThunkAction } from "@reduxjs/toolkit";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { persistReducer, persistStore, Storage } from "redux-persist";
+import {AnyAction, configureStore, ThunkAction} from "@reduxjs/toolkit";
+import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
+import {persistReducer, persistStore, Storage} from "redux-persist";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
-import reducer, { BLACK_LIST, RootReducer, WHITE_LIST } from "store/index";
-import { MMKV } from "react-native-mmkv";
+import reducer, {BLACK_LIST, RootReducer, WHITE_LIST} from "store/index";
+import {MMKV} from "react-native-mmkv";
 import logger from "redux-logger";
 import ReduxHelper from "helpers/redux.helper";
 import Config from "react-native-config";

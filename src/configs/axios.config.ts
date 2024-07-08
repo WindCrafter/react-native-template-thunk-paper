@@ -4,7 +4,7 @@ import axios, {AxiosResponse} from "axios";
 import {globalApp} from "helpers/railway.helper";
 import dayjs from "dayjs";
 import AxiosHelper from "helpers/axios.helper";
-import { appUrlConfig } from "configs/index";
+import {appUrlConfig} from "configs/index";
 
 const storageMMKV = new MMKV();
 

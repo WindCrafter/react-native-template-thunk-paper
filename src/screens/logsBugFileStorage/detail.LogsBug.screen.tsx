@@ -9,7 +9,6 @@ import {useSystemTheme} from "helpers/hooks/system.hook";
 import FirebaseConstant from "constants/firebase.constant";
 import GlobalHelper from "helpers/globalHelper";
 import languages from "constants/system/languages";
-import {ESystemStatus} from "constants/system/system.constant";
 import BTextMulti from "components/base/multiText.base";
 import {FontSize, HS, MHS, VS} from "constants/system/ui/sizes.ui.constant";
 import BText from "components/base/text.base";
@@ -39,7 +38,7 @@ const DetailLogsBugScreen = () => {
                     }))
                     GlobalHelper.showSnackBar({
                         content: languages.logsBug.updated,
-                        type: ESystemStatus.Success
+                        type: 'success'
                     })
                 }).catch(err => console.log(err));
         } else {
@@ -50,7 +49,7 @@ const DetailLogsBugScreen = () => {
                 .then(() => {
                     GlobalHelper.showSnackBar({
                         content: languages.logsBug.deleted,
-                        type: ESystemStatus.Success
+                        type: "success"
                     })
                     navigationHelper.goBack();
                 }).catch(err => console.log(err));

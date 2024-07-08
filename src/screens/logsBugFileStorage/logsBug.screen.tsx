@@ -9,7 +9,6 @@ import {FontSize, HS, MHS, VS} from "constants/system/ui/sizes.ui.constant";
 import BTextMulti from "components/base/multiText.base";
 import GlobalHelper from "helpers/globalHelper";
 import languages from "constants/system/languages";
-import {ESystemStatus} from "constants/system/system.constant";
 import {NAVIGATION_DETAIL_LOGS_BUG_SCREEN} from "constants/system/navigation.constant";
 import {Device} from "constants/system/device.constant";
 import {Shadow2} from "constants/system/ui/shadow.ui.constant";
@@ -54,7 +53,7 @@ const LogsBugScreen = () => {
                 .then(() => {
                     GlobalHelper.showSnackBar({
                         content: languages.logsBug.updated,
-                        type: ESystemStatus.Success
+                        type: 'success'
                     })
                 }).catch(err => console.log(err));
         } else {
@@ -65,7 +64,7 @@ const LogsBugScreen = () => {
                 .then(() => {
                     GlobalHelper.showSnackBar({
                         content: languages.logsBug.deleted,
-                        type: ESystemStatus.Success
+                        type: 'success'
                     })
                 }).catch(err => console.log(err));
         }
